@@ -102,5 +102,4 @@ public class Sensor extends Object {
             else if (neville.getSensors().get(3).isActive) neville.setSpeed(baseSpeed * 1.6, baseSpeed);
         }
     }
-
 }
