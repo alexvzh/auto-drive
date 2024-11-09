@@ -6,18 +6,21 @@ import java.util.ArrayList;
 public class Neville extends Object {
 
     int SIZE = 90;
+    private final double BASE_SPEED = 0.1;
 
-    ArrayList<Sensor> sensors;
-    ArrayList<Wheel> wheels;
-    double w; //angular velocity
-    double v; //linear velocity
-    double orientation;
+    private ArrayList<Sensor> sensors;
+    private ArrayList<Wheel> wheels;
+    private double w; //angular velocity
+    private double v; //linear velocity
+    private double orientation;
+    private boolean active;
 
     public Neville(double x, double y, ObjectHandler objectHandler) {
         super(x, y, objectHandler);
-        orientation = 0;
-        addSensors(objectHandler);
         addWheels(objectHandler);
+        addSensors(objectHandler);
+        orientation = 0;
+        active = true;
     }
 
     @Override
@@ -39,11 +42,11 @@ public class Neville extends Object {
 
     public void addSensors(ObjectHandler objectHandler) {
         sensors = new ArrayList<>();
-        sensors.add(new Sensor(x, y, 33.59, -23.52, objectHandler));
-        sensors.add(new Sensor(x, y, 40.15, -8.29, objectHandler));
-        sensors.add(new Sensor(x, y, 41, 0, objectHandler));
-        sensors.add(new Sensor(x, y, 40.15, 8.29, objectHandler));
-        sensors.add(new Sensor(x, y, 33.59, 23.52, objectHandler));
+        sensors.add(new Sensor(x, y, 33.59, -23.52, 0,  objectHandler));
+        sensors.add(new Sensor(x, y, 40.15, -8.29, 1, objectHandler));
+        sensors.add(new Sensor(x, y, 41, 0, 2, objectHandler));
+        sensors.add(new Sensor(x, y, 40.15, 8.29, 3, objectHandler));
+        sensors.add(new Sensor(x, y, 33.59, 23.52, 4, objectHandler));
     }
 
     public void addWheels(ObjectHandler objectHandler) {
@@ -89,5 +92,32 @@ public class Neville extends Object {
 
     public ArrayList<Sensor> getSensors() {
         return sensors;
+    }
+
+    public ArrayList<Wheel> getWheels() {
+        return wheels;
+    }
+
+    public void stop() {
+        this.getWheels().get(0).setVelocity(0);
+        this.getWheels().get(1).setVelocity(0);
+        this.active = false;
+    }
+
+    public double getBaseSpeed() {
+        return BASE_SPEED;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public void setSpeed(double speed1, double speed2) {
+        this.getWheels().get(0).setVelocity(speed1);
+        this.getWheels().get(1).setVelocity(speed2);
     }
 }
