@@ -20,8 +20,6 @@ public class Wheel extends Object {
     public void draw(Graphics2D g2d) {
     }
 
-
-
     public double getVelocity() {
         return velocity;
     }

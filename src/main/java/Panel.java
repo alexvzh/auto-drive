@@ -1,18 +1,14 @@
 import Objects.Neville;
 import Objects.ObjectHandler;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 public class Panel extends JPanel implements Runnable {
 
     private final int FPS = 60;
 
     private Thread thread;
-    private final KeyHandler keyHandler;
     private final ObjectHandler objectHandler;
     Neville neville;
 
@@ -22,10 +18,7 @@ public class Panel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.setFocusable(true);
 
-        this.keyHandler = new KeyHandler();
         this.objectHandler = new ObjectHandler();
-
-        this.addKeyListener(this.keyHandler);
 
         neville = new Neville(177, 381, objectHandler);
 
