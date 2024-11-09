@@ -27,6 +27,12 @@ public class ObjectHandler {
         this.objects.remove(object);
     }
 
-
-
+    public Neville getNeville() {
+        for (Object object : objects) {
+            if (object instanceof Neville) {
+                return (Neville) object;
+            }
+        }
+        return null;
+    }
 }
