@@ -8,7 +8,7 @@ public class Wheel extends Object {
 
     public Wheel(double x, double y, ObjectHandler objectHandler) {
         super(x, y, objectHandler);
-        this.velocity = 0.1;
+        this.velocity = objectHandler.getNeville().getBaseSpeed();
     }
 
     @Override
