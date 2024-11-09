@@ -8,7 +8,7 @@ public class Wheel extends Object {
 
     public Wheel(double x, double y, ObjectHandler objectHandler) {
         super(x, y, objectHandler);
-        this.velocity = 0.05;
+        this.velocity = 0.1;
     }
 
     @Override
@@ -26,6 +26,14 @@ public class Wheel extends Object {
 
     public void setVelocity(double velocity) {
         this.velocity = velocity;
+    }
+
+    public void addVelocity(double velocity) {
+        this.velocity += velocity;
+    }
+
+    public void removeVelocity(double velocity) {
+        this.velocity -= velocity;
     }
 
     public double calculateDistance(Wheel wheel) {
