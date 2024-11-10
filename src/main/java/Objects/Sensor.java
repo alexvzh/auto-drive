@@ -46,7 +46,7 @@ public class Sensor extends Object {
             }
 
             if (this.id == 0 && !neville.getSensors().get(4).isActive) chanageSpeedHelper(0, baseSpeed * 3);
-            else if (this.id == 4 && !neville.getSensors().get(0).isActive) chanageSpeedHelper(baseSpeed* 3, 0);
+            else if (this.id == 4 && !neville.getSensors().get(0).isActive) chanageSpeedHelper(baseSpeed * 3, 0);
 
         }
 
@@ -57,7 +57,9 @@ public class Sensor extends Object {
     @Override
     public void draw(Graphics2D g2d) {
 
-        g2d.setColor(Color.RED);
+        if (isActive) g2d.setColor(Color.GREEN);
+        else g2d.setColor(Color.RED);
+
         g2d.fillOval((int) x, (int) y, 5, 5);
 
     }
