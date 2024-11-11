@@ -34,6 +34,8 @@ public class Sensor extends Object {
     @Override
     public void update() {
 
+        isActive = isOnTrack();
+
         if (!neville.isActive()) return;
         if (destinationReached()) neville.stop();
 
@@ -49,8 +51,6 @@ public class Sensor extends Object {
             else if (this.id == 4 && !neville.getSensors().get(0).isActive) chanageSpeedHelper(baseSpeed * 1.3, 0);
 
         }
-
-        isActive = isOnTrack();
 
     }
 
