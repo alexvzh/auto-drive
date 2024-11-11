@@ -4,8 +4,13 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Sensor extends Object {
+
+    public final static ArrayList<Integer> recentActivity = new ArrayList<>(Arrays.asList(0, 0, 0, 0));
+    public static int currentIndex = 0;
 
     private final double offsetX;
     private final double offsetY;
@@ -42,13 +47,20 @@ public class Sensor extends Object {
         if (wasActive != isActive) {
             wasActive = isActive;
 
-            if (!neville.getSensors().get(0).isActive && !neville.getSensors().get(4).isActive) {
-                if (this.id == 1 && isActive) neville.setSpeed(baseSpeed / 1.6, baseSpeed);
-                else if (this.id == 3 && isActive) neville.setSpeed(baseSpeed, baseSpeed / 1.6);
+            if (isActive && id != 0) {
+                recentActivity.set(currentIndex, id);
+                currentIndex = (currentIndex + 1) % recentActivity.size();
             }
 
-            if (this.id == 0 && !neville.getSensors().get(4).isActive) chanageSpeedHelper(0, baseSpeed * 1.3);
-            else if (this.id == 4 && !neville.getSensors().get(0).isActive) chanageSpeedHelper(baseSpeed * 1.3, 0);
+            if (!neville.getSensors().get(0).isActive && !neville.getSensors().get(4).isActive) {
+                if (!neville.isMovingStraight()) {
+                    if (id == 1 && isActive) neville.setSpeed(baseSpeed / 1.6, baseSpeed);
+                    else if (id == 3 && isActive) neville.setSpeed(baseSpeed, baseSpeed / 1.6);
+                }
+            }
+
+            if (id == 0 && !neville.getSensors().get(4).isActive) chanageSpeedHelper(0, baseSpeed * 1.3);
+            else if (id == 4 && !neville.getSensors().get(0).isActive) chanageSpeedHelper(baseSpeed * 1.3, 0);
 
         }
 

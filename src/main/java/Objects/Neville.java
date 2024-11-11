@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Neville extends Object {
 
     int SIZE = 90;
-    private final double BASE_SPEED = 0.1;
+    private final double BASE_SPEED = 0.22;
 
     private ArrayList<Sensor> sensors;
     private ArrayList<Wheel> wheels;
@@ -125,5 +125,13 @@ public class Neville extends Object {
 
     public double getEndTime() {
         return endTime;
+    }
+
+    public boolean isMovingStraight() {
+        if (Sensor.recentActivity.get(0) == Sensor.recentActivity.get(2) && Sensor.recentActivity.get(1) == Sensor.recentActivity.get(3)) {
+            setSpeed(BASE_SPEED, BASE_SPEED);
+            return true;
+        }
+        return false;
     }
 }
