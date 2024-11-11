@@ -10,7 +10,8 @@ public class Panel extends JPanel implements Runnable {
 
     private Thread thread;
     private final ObjectHandler objectHandler;
-    Neville neville;
+    private final Neville neville;
+    private final double startTime;
 
     public Panel() {
         this.setPreferredSize(new Dimension(1128, 848));
@@ -19,8 +20,8 @@ public class Panel extends JPanel implements Runnable {
         this.setFocusable(true);
 
         this.objectHandler = new ObjectHandler();
-
-        neville = new Neville(177, 381, objectHandler);
+        this.neville = new Neville(177, 381, objectHandler);
+        this.startTime = System.nanoTime();
 
     }
 
@@ -67,6 +68,16 @@ public class Panel extends JPanel implements Runnable {
         /////////////////////////////////////////
 
         objectHandler.draw(g2d);
+
+        double timer = (System.nanoTime() - startTime);
+        if (!neville.isActive()) {
+            timer = neville.getEndTime() - startTime;
+        }
+
+        g2d.setColor(Color.BLACK);
+        g2d.setFont(new Font("Calibri", Font.PLAIN, 20));
+        g2d.drawString((int) (timer / 1000000000  * 10000) / 10000.0 + " Seconds ", 5, 40);
+
 
         /////////////////////////////////////////
         g2d.dispose();

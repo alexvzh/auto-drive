@@ -14,6 +14,7 @@ public class Neville extends Object {
     private double v; //linear velocity
     private double orientation;
     private boolean active;
+    private double endTime;
 
     public Neville(double x, double y, ObjectHandler objectHandler) {
         super(x, y, objectHandler);
@@ -99,6 +100,7 @@ public class Neville extends Object {
     }
 
     public void stop() {
+        this.endTime = System.nanoTime();
         this.getWheels().get(0).setVelocity(0);
         this.getWheels().get(1).setVelocity(0);
         this.active = false;
@@ -119,5 +121,9 @@ public class Neville extends Object {
     public void setSpeed(double speed1, double speed2) {
         this.getWheels().get(0).setVelocity(speed1);
         this.getWheels().get(1).setVelocity(speed2);
+    }
+
+    public double getEndTime() {
+        return endTime;
     }
 }
