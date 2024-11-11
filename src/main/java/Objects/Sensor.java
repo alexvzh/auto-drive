@@ -41,12 +41,12 @@ public class Sensor extends Object {
             wasActive = isActive;
 
             if (!neville.getSensors().get(0).isActive && !neville.getSensors().get(4).isActive) {
-                if (this.id == 1 && isActive) neville.setSpeed(baseSpeed, baseSpeed * 1.6);
-                else if (this.id == 3 && isActive) neville.setSpeed(baseSpeed * 1.6, baseSpeed);
+                if (this.id == 1 && isActive) neville.setSpeed(baseSpeed / 1.6, baseSpeed);
+                else if (this.id == 3 && isActive) neville.setSpeed(baseSpeed, baseSpeed / 1.6);
             }
 
-            if (this.id == 0 && !neville.getSensors().get(4).isActive) chanageSpeedHelper(0, baseSpeed * 3);
-            else if (this.id == 4 && !neville.getSensors().get(0).isActive) chanageSpeedHelper(baseSpeed * 3, 0);
+            if (this.id == 0 && !neville.getSensors().get(4).isActive) chanageSpeedHelper(0, baseSpeed * 1.3);
+            else if (this.id == 4 && !neville.getSensors().get(0).isActive) chanageSpeedHelper(baseSpeed * 1.3, 0);
 
         }
 
@@ -100,8 +100,8 @@ public class Sensor extends Object {
     public void chanageSpeedHelper(double speed1, double speed2) {
         if (isActive) neville.setSpeed(speed1, speed2);
         else {
-            if (neville.getSensors().get(1).isActive) neville.setSpeed(baseSpeed, baseSpeed * 1.6);
-            else if (neville.getSensors().get(3).isActive) neville.setSpeed(baseSpeed * 1.6, baseSpeed);
+            if (neville.getSensors().get(1).isActive) neville.setSpeed(baseSpeed / 1.6, baseSpeed);
+            else if (neville.getSensors().get(3).isActive) neville.setSpeed(baseSpeed, baseSpeed / 1.6);
         }
     }
 }
