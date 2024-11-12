@@ -38,6 +38,7 @@ public class Neville extends Object {
     public void draw(Graphics2D g2d) {
 
         g2d.setColor(Color.BLUE);
+        if (isMovingStraight()) g2d.setColor(Color.GRAY);
         g2d.fillOval((int) (x - (float) SIZE / 2), (int) (y - (float) SIZE / 2), SIZE, SIZE);
     }
 
@@ -128,10 +129,17 @@ public class Neville extends Object {
     }
 
     public boolean isMovingStraight() {
-        if (Sensor.recentActivity.get(0) == Sensor.recentActivity.get(2) && Sensor.recentActivity.get(1) == Sensor.recentActivity.get(3)) {
-            setSpeed(BASE_SPEED, BASE_SPEED);
-            return true;
+
+        int firstActivity = Sensor.recentActivity.get(0);
+        int secondActivity = Sensor.recentActivity.get(1);
+
+        for (int i = 0; i < Sensor.recentActivity.size(); i++) {
+            int currentActivity = Sensor.recentActivity.get(i);
+            if ((i % 2 == 0 && currentActivity != firstActivity) ||
+                (i % 2 != 0 && currentActivity != secondActivity)) {
+                return false;
+            }
         }
-        return false;
+        return true;
     }
 }

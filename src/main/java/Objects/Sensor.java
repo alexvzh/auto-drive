@@ -9,7 +9,7 @@ import java.util.Arrays;
 
 public class Sensor extends Object {
 
-    public final static ArrayList<Integer> recentActivity = new ArrayList<>(Arrays.asList(0, 0, 0, 0));
+    public final static ArrayList<Integer> recentActivity = new ArrayList<>(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0));
     public static int currentIndex = 0;
 
     private final double offsetX;
@@ -56,7 +56,7 @@ public class Sensor extends Object {
                 if (!neville.isMovingStraight()) {
                     if (id == 1 && isActive) neville.setSpeed(baseSpeed / 1.6, baseSpeed);
                     else if (id == 3 && isActive) neville.setSpeed(baseSpeed, baseSpeed / 1.6);
-                }
+                } else neville.setSpeed(baseSpeed, baseSpeed);
             }
 
             if (id == 0 && !neville.getSensors().get(4).isActive) chanageSpeedHelper(0, baseSpeed * 1.3);
