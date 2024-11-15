@@ -9,7 +9,7 @@ import java.util.Arrays;
 
 public class Sensor extends Object {
 
-    public final static ArrayList<Integer> recentActivity = new ArrayList<>(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0));
+    public final static ArrayList<Integer> recentActivity = new ArrayList<>(Arrays.asList(0, 0, 0, 0));
     public static int currentIndex = 0;
 
     private final double offsetX;
