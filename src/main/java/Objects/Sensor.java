@@ -15,11 +15,11 @@ public class Sensor extends Object {
     private final double offsetX;
     private final double offsetY;
     private final BufferedImage backround;
-    private boolean isActive;
-    private boolean wasActive;
     private final int id;
     private final double baseSpeed;
     private final Neville neville;
+    private boolean isActive;
+    private boolean wasActive;
 
     public Sensor(double x, double y, double offsetX, double offsetY, int id,  ObjectHandler objectHandler) {
         super(x + offsetX, y + offsetY, objectHandler);
@@ -42,12 +42,11 @@ public class Sensor extends Object {
         isActive = isOnTrack();
 
         if (!neville.isActive()) return;
-        if (destinationReached()) neville.stop();
 
         if (wasActive != isActive) {
             wasActive = isActive;
 
-            if (isActive && id != 0) {
+            if (isActive) {
                 recentActivity.set(currentIndex, id);
                 currentIndex = (currentIndex + 1) % recentActivity.size();
             }
@@ -59,8 +58,8 @@ public class Sensor extends Object {
                 } else neville.setSpeed(baseSpeed * 1.3, baseSpeed * 1.3);
             }
 
-            if (id == 0 && !neville.getSensors().get(4).isActive) chanageSpeedHelper(0, baseSpeed * 1.3);
-            else if (id == 4 && !neville.getSensors().get(0).isActive) chanageSpeedHelper(baseSpeed * 1.3, 0);
+            if (id == 0 && !neville.getSensors().get(4).isActive) changeSpeedHelper(0, baseSpeed * 1.3);
+            else if (id == 4 && !neville.getSensors().get(0).isActive) changeSpeedHelper(baseSpeed * 1.3, 0);
 
         }
 
@@ -88,7 +87,7 @@ public class Sensor extends Object {
         return backround;
     }
 
-    private boolean isOnTrack() {
+    public boolean isOnTrack() {
 
         int pixel = backround.getRGB((int) x, (int) y);
 
@@ -101,15 +100,7 @@ public class Sensor extends Object {
 
     }
 
-    public boolean destinationReached() {
-        return  neville.getSensors().get(0).isActive &&
-                neville.getSensors().get(1).isActive &&
-                neville.getSensors().get(2).isActive &&
-                neville.getSensors().get(3).isActive &&
-                neville.getSensors().get(4).isActive;
-    }
-
-    public void chanageSpeedHelper(double speed1, double speed2) {
+    public void changeSpeedHelper(double speed1, double speed2) {
         if (isActive) neville.setSpeed(speed1, speed2);
         else {
             if (neville.getSensors().get(1).isActive) neville.setSpeed(baseSpeed / 1.6, baseSpeed);
