@@ -5,11 +5,11 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 
 public class Sensor extends Object {
 
-    public final static ArrayList<Integer> recentActivity = new ArrayList<>(Arrays.asList(0, 0, 0, 0));
+    public final static ArrayList<Integer> recentActivity = new ArrayList<>(Collections.nCopies(4, 0));
     public static int currentIndex = 0;
 
     private final double offsetX;
@@ -53,13 +53,13 @@ public class Sensor extends Object {
 
             if (!neville.getSensors().get(0).isActive && !neville.getSensors().get(4).isActive) {
                 if (!neville.isMovingStraight()) {
-                    if (id == 1 && isActive) neville.setSpeed(baseSpeed / 1.6, baseSpeed);
-                    else if (id == 3 && isActive) neville.setSpeed(baseSpeed, baseSpeed / 1.6);
-                } else neville.setSpeed(baseSpeed * 1.3, baseSpeed * 1.3);
+                    if (id == 1 && isActive) neville.setSpeed(baseSpeed / 1.3, baseSpeed);
+                    else if (id == 3 && isActive) neville.setSpeed(baseSpeed, baseSpeed / 1.3);
+                } else neville.setSpeed(baseSpeed * 1.5, baseSpeed * 1.5);
             }
 
-            if (id == 0 && !neville.getSensors().get(4).isActive) changeSpeedHelper(0, baseSpeed * 1.3);
-            else if (id == 4 && !neville.getSensors().get(0).isActive) changeSpeedHelper(baseSpeed * 1.3, 0);
+            if (id == 0 && !neville.getSensors().get(4).isActive) changeSpeedHelper(0, baseSpeed * 1.5);
+            else if (id == 4 && !neville.getSensors().get(0).isActive) changeSpeedHelper(baseSpeed * 1.5, 0);
 
         }
 
@@ -103,8 +103,8 @@ public class Sensor extends Object {
     public void changeSpeedHelper(double speed1, double speed2) {
         if (isActive) neville.setSpeed(speed1, speed2);
         else {
-            if (neville.getSensors().get(1).isActive) neville.setSpeed(baseSpeed / 1.6, baseSpeed);
-            else if (neville.getSensors().get(3).isActive) neville.setSpeed(baseSpeed, baseSpeed / 1.6);
+            if (neville.getSensors().get(1).isActive) neville.setSpeed(baseSpeed / 1.3, baseSpeed);
+            else if (neville.getSensors().get(3).isActive) neville.setSpeed(baseSpeed, baseSpeed / 1.3);
         }
     }
 }
