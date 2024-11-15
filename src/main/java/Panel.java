@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class Panel extends JPanel implements Runnable {
 
-    private final int FPS = 60;
+    private int FPS = 1000;
 
     private Thread thread;
     private final ObjectHandler objectHandler;
@@ -32,10 +32,12 @@ public class Panel extends JPanel implements Runnable {
 
     @Override
     public void run() {
+
         double drawInterval = 1000000000 / FPS;
         double nextDrawTime = System.nanoTime() + drawInterval;
 
         while (thread != null) {
+
             update();
             repaint();
 
@@ -49,6 +51,7 @@ public class Panel extends JPanel implements Runnable {
                 }
 
                 Thread.sleep((long)remainingTime);
+                drawInterval = 1000000000 / FPS;
                 nextDrawTime += drawInterval;
 
             } catch (Exception ignored) {}
@@ -69,10 +72,8 @@ public class Panel extends JPanel implements Runnable {
 
         objectHandler.draw(g2d);
 
-        double timer = (System.nanoTime() - startTime);
-        if (!neville.isActive()) {
-            timer = neville.getEndTime() - startTime;
-        }
+        double timer = neville.getEndTime() - startTime;
+        if (neville.isActive()) timer = (System.nanoTime() - startTime);
 
         g2d.setColor(Color.BLACK);
         g2d.setFont(new Font("Calibri", Font.PLAIN, 20));
@@ -82,7 +83,5 @@ public class Panel extends JPanel implements Runnable {
         /////////////////////////////////////////
         g2d.dispose();
     }
-
-
 
 }
