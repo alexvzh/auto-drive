@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Neville extends Object {
 
     int SIZE = 90;
-    private final double BASE_SPEED = 0.19;
+    private final double BASE_SPEED = 0.22;
 
     private ArrayList<Sensor> sensors;
     private ArrayList<Wheel> wheels;
@@ -18,8 +18,8 @@ public class Neville extends Object {
 
     public Neville(double x, double y, ObjectHandler objectHandler) {
         super(x, y, objectHandler);
-        addWheels(objectHandler);
         addSensors(objectHandler);
+        addWheels(objectHandler);
         orientation = 0;
         active = true;
     }
@@ -31,6 +31,8 @@ public class Neville extends Object {
         updateLinearVelocity();
         updateOrientation();
         updatePosition();
+
+        if (destinationReached() && isActive()) stop();
 
     }
 
@@ -102,15 +104,12 @@ public class Neville extends Object {
         return wheels;
     }
 
-    public void stop() {
-        this.endTime = System.nanoTime();
-        this.getWheels().get(0).setVelocity(0);
-        this.getWheels().get(1).setVelocity(0);
-        this.active = false;
-    }
-
     public double getBaseSpeed() {
         return BASE_SPEED;
+    }
+
+    public double getEndTime() {
+        return endTime;
     }
 
     public boolean isActive() {
@@ -118,16 +117,13 @@ public class Neville extends Object {
     }
 
     public void setActive(boolean active) {
+        if (!active) this.endTime = System.nanoTime();
         this.active = active;
     }
 
     public void setSpeed(double speed1, double speed2) {
         this.getWheels().get(0).setVelocity(speed1);
         this.getWheels().get(1).setVelocity(speed2);
-    }
-
-    public double getEndTime() {
-        return endTime;
     }
 
     public boolean isMovingStraight() {
@@ -143,5 +139,15 @@ public class Neville extends Object {
             }
         }
         return true;
+    }
+
+    public boolean destinationReached() {
+        return getSensors().stream().allMatch(Sensor::isOnTrack);
+    }
+
+    public void stop() {
+        this.getWheels().get(0).setVelocity(0);
+        this.getWheels().get(1).setVelocity(0);
+        setActive(false);
     }
 }
