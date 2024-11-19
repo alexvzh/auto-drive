@@ -1,4 +1,4 @@
-package Objects;
+package object;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Neville extends Object {
 
     int SIZE = 90;
-    private final double BASE_SPEED = 0.005;
+    private final double BASE_SPEED = 0.03;
 
     private ArrayList<Sensor> sensors;
     private ArrayList<Wheel> wheels;
@@ -40,8 +40,6 @@ public class Neville extends Object {
     public void draw(Graphics2D g2d) {
 
         g2d.setColor(Color.DARK_GRAY);
-        //if (isMovingStraight()) g2d.setColor(Color.GRAY);
-        //if (!isActive()) g2d.setColor(Color.darkGray);
         g2d.fillOval((int) (x - (float) SIZE / 2), (int) (y - (float) SIZE / 2), SIZE, SIZE);
     }
 
