@@ -1,5 +1,7 @@
-import Objects.Neville;
-import Objects.ObjectHandler;
+package main;
+
+import object.Neville;
+import object.ObjectHandler;
 
 import javax.swing.*;
 import java.awt.*;

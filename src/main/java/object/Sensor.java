@@ -68,8 +68,8 @@ public class Sensor extends Object {
     @Override
     public void draw(Graphics2D g2d) {
 
-        if (isActive) g2d.setColor(Color.GREEN);
-        else g2d.setColor(Color.RED);
+        Color color = isActive ? Color.GREEN : Color.RED;
+        g2d.setColor(color);
 
         g2d.fillOval((int) x, (int) y, 5, 5);
 
