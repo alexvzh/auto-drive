@@ -68,7 +68,6 @@ public abstract class Scene extends JPanel implements Runnable {
         /////////////////////////////////////////
         draw(g2d);
         /////////////////////////////////////////
-        g2d.dispose();
     }
 
     public String getId() {
