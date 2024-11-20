@@ -14,7 +14,6 @@ public class Main {
         window.setTitle("auto-drive");
 
         window.add(sceneManager.getCurrentScene());
-        window.pack();
         window.setLocationRelativeTo(null);
         window.setVisible(true);
 
