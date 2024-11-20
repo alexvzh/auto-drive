@@ -1,7 +1,9 @@
-package scene;
+package scene.scenes;
 
 import object.Neville;
 import object.ObjectHandler;
+import scene.Scene;
+import scene.SceneManager;
 
 import java.awt.*;
 
@@ -23,7 +25,6 @@ public class DemoScene extends Scene {
     public void update() {
 
         objectHandler.update();
-        if (!neville.isActive()) sceneManager.setScene("menu");
 
     }
 

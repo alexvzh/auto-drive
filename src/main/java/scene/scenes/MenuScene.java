@@ -1,4 +1,7 @@
-package scene;
+package scene.scenes;
+
+import scene.Scene;
+import scene.SceneManager;
 
 import java.awt.*;
 
