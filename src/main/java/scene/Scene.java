@@ -2,6 +2,7 @@ package scene;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public abstract class Scene extends JPanel implements Runnable {
 
@@ -65,9 +66,7 @@ public abstract class Scene extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-        /////////////////////////////////////////
         draw(g2d);
-        /////////////////////////////////////////
     }
 
     public String getId() {
@@ -86,8 +85,14 @@ public abstract class Scene extends JPanel implements Runnable {
         this.FPS = FPS;
     }
 
+    public void addButton(int x, int y, int width, int height, String text, ActionListener actionListener) {
+        JButton button = new JButton(text);
+        button.setBounds(x, y, width, height);
+        button.addActionListener(actionListener);
+        this.add(button);
+    }
+
     public abstract void update();
     public abstract void draw(Graphics2D g2d);
-
 
 }
