@@ -15,7 +15,7 @@ public class MenuScene extends Scene {
         super(0, 0, id, sceneManager);
         this.setLayout(null);
         spawnBalls();
-        addButton((getPreferredSize().width/2)-125,(getPreferredSize().height/3)-50, 250, 100, "Test", e -> System.out.println(getWidth()/2));
+        addButton((getPreferredSize().width/2)-125,(getPreferredSize().height/3)-50, 250, 100, "Demo", e -> sceneManager.setScene("demo"));
     }
 
     @Override
