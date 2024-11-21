@@ -1,5 +1,7 @@
 package scene;
 
+import object.ObjectHandler;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -11,6 +13,7 @@ public abstract class Scene extends JPanel implements Runnable {
     private boolean running;
     private final String id;
     public final SceneManager sceneManager;
+    public final ObjectHandler objectHandler;
 
     public Scene(int width, int height, String id, SceneManager sceneManager) {
         if (width == 0 || height == 0) {
@@ -24,6 +27,7 @@ public abstract class Scene extends JPanel implements Runnable {
         this.running = false;
         this.id = id;
         this.sceneManager = sceneManager;
+        this.objectHandler = new ObjectHandler();
 
         sceneManager.addScene(this);
 

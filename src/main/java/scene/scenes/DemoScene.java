@@ -1,7 +1,6 @@
 package scene.scenes;
 
 import object.Neville;
-import object.ObjectHandler;
 import scene.Scene;
 import scene.SceneManager;
 
@@ -9,14 +8,12 @@ import java.awt.*;
 
 public class DemoScene extends Scene {
 
-    private final ObjectHandler objectHandler;
     private final Neville neville;
     private final double startTime;
 
     public DemoScene(String id, SceneManager sceneManager) {
         super(0, 0, id, sceneManager);
 
-        this.objectHandler = new ObjectHandler();
         this.neville = new Neville(177, 381, objectHandler);
         this.startTime = System.nanoTime();
     }
