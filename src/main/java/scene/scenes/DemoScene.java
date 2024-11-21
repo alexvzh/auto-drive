@@ -9,20 +9,17 @@ import java.awt.*;
 public class DemoScene extends Scene {
 
     private final Neville neville;
-    private final double startTime;
+    private double startTime;
 
     public DemoScene(String id, SceneManager sceneManager) {
         super(0, 0, id, sceneManager);
 
         this.neville = new Neville(177, 381, objectHandler);
-        this.startTime = System.nanoTime();
     }
 
     @Override
     public void update() {
-
         objectHandler.update();
-
     }
 
     @Override
@@ -37,5 +34,9 @@ public class DemoScene extends Scene {
         g2d.setFont(new Font("Calibri", Font.PLAIN, 20));
         g2d.drawString((int) (timer / 1000000000  * 10000) / 10000.0 + " Seconds ", 5, 40);
 
+    }
+
+    public void setStartTime(double startTime) {
+        this.startTime = startTime;
     }
 }
