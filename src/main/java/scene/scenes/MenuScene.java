@@ -28,6 +28,11 @@ public class MenuScene extends Scene {
         objectHandler.draw(g2d);
     }
 
+    @Override
+    public void init() {
+
+    }
+
     private void spawnBalls() {
         for (int i = 0; i < 150; i ++) {
             new MenuBall(r.nextInt(1100), r.nextInt(800), objectHandler);

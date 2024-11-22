@@ -36,6 +36,11 @@ public class DemoScene extends Scene {
 
     }
 
+    @Override
+    public void init() {
+
+    }
+
     public void setStartTime(double startTime) {
         this.startTime = startTime;
     }
