@@ -24,6 +24,8 @@ public abstract class Scene extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.setFocusable(true);
 
+        init();
+
         this.running = false;
         this.id = id;
         this.sceneManager = sceneManager;
@@ -98,5 +100,6 @@ public abstract class Scene extends JPanel implements Runnable {
 
     public abstract void update();
     public abstract void draw(Graphics2D g2d);
+    public abstract void init();
 
 }
