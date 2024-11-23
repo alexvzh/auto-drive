@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Neville extends Object {
 
-    int SIZE = 90;
+    private final int SIZE = 90;
     private final double BASE_SPEED = 0.03;
 
     private ArrayList<Sensor> sensors;
@@ -14,6 +14,7 @@ public class Neville extends Object {
     private double v; //linear velocity
     private double orientation;
     private boolean active;
+    private double startTime;
     private double endTime;
 
     public Neville(double x, double y, ObjectHandler objectHandler) {
@@ -105,8 +106,20 @@ public class Neville extends Object {
         return BASE_SPEED;
     }
 
+    public double getStartTime() {
+        return startTime;
+    }
+
+    public void updateStartTime() {
+        this.startTime = System.nanoTime();
+    }
+
     public double getEndTime() {
         return endTime;
+    }
+
+    public void updateEndTime() {
+        this.endTime = System.nanoTime();
     }
 
     public boolean isActive() {
@@ -114,7 +127,7 @@ public class Neville extends Object {
     }
 
     public void setActive(boolean active) {
-        if (!active) this.endTime = System.nanoTime();
+        if (!active) updateEndTime();
         this.active = active;
     }
 

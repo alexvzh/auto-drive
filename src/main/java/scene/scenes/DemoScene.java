@@ -9,7 +9,6 @@ import java.awt.*;
 public class DemoScene extends Scene {
 
     private final Neville neville;
-    private double startTime;
 
     public DemoScene(String id, SceneManager sceneManager) {
         super(0, 0, id, sceneManager);
@@ -28,8 +27,8 @@ public class DemoScene extends Scene {
         g2d.drawImage(neville.getSensors().get(0).getBackround(), 0, 0, null);
         objectHandler.draw(g2d);
 
-        double timer = neville.getEndTime() - startTime;
-        if (neville.isActive()) timer = (System.nanoTime() - startTime);
+        double timer = neville.getEndTime() - neville.getStartTime();
+        if (neville.isActive()) timer = (System.nanoTime() - neville.getStartTime());
 
         g2d.setColor(Color.BLACK);
         g2d.setFont(new Font("Calibri", Font.PLAIN, 20));
@@ -39,12 +38,9 @@ public class DemoScene extends Scene {
 
     @Override
     public void init() {
-        this.setStartTime(System.nanoTime());
+        neville.updateStartTime();
         neville.setX(177);
         neville.setY(381);
     }
 
-    public void setStartTime(double startTime) {
-        this.startTime = startTime;
-    }
 }
