@@ -74,14 +74,12 @@ public class Neville extends Object {
     }
 
     public void updateOrientation() {
-        // delta time = 60
-        orientation += angularVelocity * 60;
+        orientation += angularVelocity * scene.getDELTA_TIME();
     }
 
     public void updatePosition() {
-        // delta time = 60
-        x += linearVelocity * Math.cos(orientation) * 60;
-        y += linearVelocity * Math.sin(orientation) * 60;
+        x += linearVelocity * Math.cos(orientation) * scene.getDELTA_TIME();
+        y += linearVelocity * Math.sin(orientation) * scene.getDELTA_TIME();
 
         for (Sensor sensor : sensors) {
 
