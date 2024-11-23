@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Neville extends Object {
 
     private final int SIZE = 90;
-    private final double BASE_SPEED = 0.03;
+    private final double BASE_SPEED = 900;
 
     private ArrayList<Sensor> sensors;
     private ArrayList<Wheel> wheels;
