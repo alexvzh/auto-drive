@@ -8,7 +8,9 @@ import java.awt.event.ActionListener;
 
 public abstract class Scene extends JPanel implements Runnable {
 
-    private int FPS = 1000;
+    private int FPS = 100000;
+    private final double DELTA_TIME = (double) 1 / FPS;
+
     private Thread thread;
     private boolean running;
     private final String id;
@@ -95,6 +97,10 @@ public abstract class Scene extends JPanel implements Runnable {
 
     public void setFPS(int FPS) {
         this.FPS = FPS;
+    }
+
+    public double getDELTA_TIME() {
+        return DELTA_TIME;
     }
 
     public void addButton(int x, int y, int width, int height, String text, ActionListener actionListener) {
