@@ -16,8 +16,9 @@ public abstract class Scene extends JPanel implements Runnable {
     private final String id;
     private final SceneManager sceneManager;
     private final ObjectHandler objectHandler;
+    private final SceneFrequency sceneFrequency;
 
-    public Scene(int width, int height, String id, SceneManager sceneManager) {
+    public Scene(int width, int height, String id, SceneFrequency sceneFrequency, SceneManager sceneManager) {
         if (width == 0 || height == 0) {
             this.setPreferredSize(new Dimension(1128, 848));
         } else this.setPreferredSize(new Dimension(width, height));
@@ -29,6 +30,7 @@ public abstract class Scene extends JPanel implements Runnable {
         this.running = false;
         this.id = id;
         this.sceneManager = sceneManager;
+        this.sceneFrequency = sceneFrequency;
         this.objectHandler = new ObjectHandler();
 
         sceneManager.addScene(this);
@@ -97,6 +99,10 @@ public abstract class Scene extends JPanel implements Runnable {
 
     public double getDELTA_TIME() {
         return DELTA_TIME;
+    }
+
+    public SceneFrequency getSceneFrequency() {
+        return sceneFrequency;
     }
 
     public SceneManager getSceneManager() {
