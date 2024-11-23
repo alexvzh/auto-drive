@@ -15,8 +15,8 @@ public class SceneManager {
     public SceneManager(JFrame frame) {
         this.frame = frame;
         this.scenes = new ArrayList<>();
-        currentScene = new MenuScene("menu", this);
-        new DemoScene("demo", this);
+        currentScene = new MenuScene("menu", SceneFrequency.LOW, this);
+        new DemoScene("demo", SceneFrequency.HIGH, this);
     }
 
     public void setScene(String sceneID) {

@@ -2,6 +2,7 @@ package scene.scenes;
 
 import object.MenuBall;
 import scene.Scene;
+import scene.SceneFrequency;
 import scene.SceneManager;
 
 import java.awt.*;
@@ -11,12 +12,13 @@ public class MenuScene extends Scene {
 
     Random r = new Random();
 
-    public MenuScene(String id, SceneManager sceneManager) {
-        super(0, 0, id, sceneManager);
+    public MenuScene(String id, SceneFrequency sceneFrequency, SceneManager sceneManager) {
+        super(0, 0, id, sceneFrequency, sceneManager);
         this.setLayout(null);
         spawnBalls();
         addButton((getPreferredSize().width/2)-125,(getPreferredSize().height/3)-50, 250, 100, "Demo", e -> sceneManager.setScene("demo"));
         addButton((getPreferredSize().width/2)-125,(getPreferredSize().height/2)-50, 250, 100, "Pause!", e -> setRunning(!isRunning()));
+        addButton((getPreferredSize().width/2)-125,(getPreferredSize().height/3)*2-50, 250, 100, "Pause!", e -> setRunning(!isRunning()));
 
     }
 
@@ -32,7 +34,6 @@ public class MenuScene extends Scene {
 
     @Override
     public void init() {
-        setFPS(10000);
     }
 
     private void spawnBalls() {

@@ -2,6 +2,7 @@ package scene.scenes;
 
 import object.Neville;
 import scene.Scene;
+import scene.SceneFrequency;
 import scene.SceneManager;
 
 import java.awt.*;
@@ -10,8 +11,8 @@ public class DemoScene extends Scene {
 
     private final Neville neville;
 
-    public DemoScene(String id, SceneManager sceneManager) {
-        super(0, 0, id, sceneManager);
+    public DemoScene(String id, SceneFrequency sceneFrequency, SceneManager sceneManager) {
+        super(0, 0, id, sceneFrequency, sceneManager);
 
         this.neville = new Neville(177, 0, this);
         init();
