@@ -24,8 +24,6 @@ public abstract class Scene extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.setFocusable(true);
 
-        init();
-
         this.running = false;
         this.id = id;
         this.sceneManager = sceneManager;
@@ -46,12 +44,19 @@ public abstract class Scene extends JPanel implements Runnable {
 
         double drawInterval = 1000000000 / FPS;
         double nextDrawTime = System.nanoTime() + drawInterval;
+        int updatesPerRender = 100;
+        int updateCount = 0;
 
         while (thread != null) {
 
             if (running) {
                 update();
-                repaint();
+                updateCount++;
+
+                if (updateCount >= updatesPerRender) {
+                    repaint();
+                    updateCount = 0;
+                }
             }
 
             try {
@@ -64,7 +69,6 @@ public abstract class Scene extends JPanel implements Runnable {
                 }
 
                 Thread.sleep((long)remainingTime);
-                drawInterval = 1000000000 / FPS;
                 nextDrawTime += drawInterval;
 
             } catch (Exception ignored) {}
