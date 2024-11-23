@@ -14,8 +14,8 @@ public abstract class Scene extends JPanel implements Runnable {
     private Thread thread;
     private boolean running;
     private final String id;
-    public final SceneManager sceneManager;
-    public final ObjectHandler objectHandler;
+    private final SceneManager sceneManager;
+    private final ObjectHandler objectHandler;
 
     public Scene(int width, int height, String id, SceneManager sceneManager) {
         if (width == 0 || height == 0) {
@@ -101,6 +101,14 @@ public abstract class Scene extends JPanel implements Runnable {
 
     public double getDELTA_TIME() {
         return DELTA_TIME;
+    }
+
+    public SceneManager getSceneManager() {
+        return sceneManager;
+    }
+
+    public ObjectHandler getObjectHandler() {
+        return objectHandler;
     }
 
     public void addButton(int x, int y, int width, int height, String text, ActionListener actionListener) {
