@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 
 public abstract class Scene extends JPanel implements Runnable {
 
-    private int FPS = 100000;
+    private final int FPS = 100000;
     private final double DELTA_TIME = (double) 1 / FPS;
 
     private Thread thread;
@@ -93,10 +93,6 @@ public abstract class Scene extends JPanel implements Runnable {
 
     public void setRunning(boolean running) {
         this.running = running;
-    }
-
-    public void setFPS(int FPS) {
-        this.FPS = FPS;
     }
 
     public double getDELTA_TIME() {
