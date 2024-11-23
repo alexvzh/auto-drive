@@ -47,10 +47,12 @@ public abstract class Scene extends JPanel implements Runnable {
         double drawInterval = 1000000000 / FPS;
         double nextDrawTime = System.nanoTime() + drawInterval;
 
-        while (thread != null && running) {
+        while (thread != null) {
 
-            update();
-            repaint();
+            if (running) {
+                update();
+                repaint();
+            }
 
             try {
 
