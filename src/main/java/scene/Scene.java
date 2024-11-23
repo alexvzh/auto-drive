@@ -28,7 +28,7 @@ public abstract class Scene extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.setFocusable(true);
 
-        this.FPS = sceneFrequency.equals(SceneFrequency.HIGH) ? 100000 : 100;
+        this.FPS = sceneFrequency.equals(SceneFrequency.HIGH) ? 100000 : 240;
         this.DELTA_TIME = (double) 1 / FPS;
         this.running = false;
         this.id = id;
