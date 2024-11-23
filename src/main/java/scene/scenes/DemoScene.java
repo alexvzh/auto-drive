@@ -14,7 +14,8 @@ public class DemoScene extends Scene {
     public DemoScene(String id, SceneManager sceneManager) {
         super(0, 0, id, sceneManager);
 
-        this.neville = new Neville(177, 381, objectHandler);
+        this.neville = new Neville(0, 0, objectHandler);
+        init();
     }
 
     @Override
@@ -38,7 +39,9 @@ public class DemoScene extends Scene {
 
     @Override
     public void init() {
-
+        this.setStartTime(System.nanoTime());
+        neville.setX(177);
+        neville.setY(381);
     }
 
     public void setStartTime(double startTime) {
