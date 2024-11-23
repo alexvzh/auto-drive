@@ -25,9 +25,9 @@ public class SceneManager {
         frame.add(scene);
         frame.pack();
         frame.setLocationRelativeTo(null);
+        scene.init();
         scene.startThread();
         currentScene = scene;
-        if (scene instanceof DemoScene) {((DemoScene) scene).setStartTime(System.nanoTime());}
     }
 
     public void addScene(Scene scene) {
