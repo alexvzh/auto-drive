@@ -1,5 +1,7 @@
 package object;
 
+import scene.Scene;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -8,6 +10,7 @@ public class Neville extends Object {
     private final int SIZE = 90;
     private final double BASE_SPEED = 900;
 
+    private final Scene scene;
     private ArrayList<Sensor> sensors;
     private ArrayList<Wheel> wheels;
     private double angularVelocity;
@@ -17,12 +20,13 @@ public class Neville extends Object {
     private double startTime;
     private double endTime;
 
-    public Neville(double x, double y, ObjectHandler objectHandler) {
-        super(x, y, objectHandler);
-        addSensors(objectHandler);
-        addWheels(objectHandler);
-        orientation = 0;
-        active = true;
+    public Neville(double x, double y, Scene scene) {
+        super(x, y, scene);
+        this.scene = scene;
+        addSensors(scene.getObjectHandler());
+        addWheels(scene.getObjectHandler());
+        this.orientation = 0;
+        this.active = true;
     }
 
     @Override
@@ -46,17 +50,17 @@ public class Neville extends Object {
 
     public void addSensors(ObjectHandler objectHandler) {
         sensors = new ArrayList<>();
-        sensors.add(new Sensor(x, y, 33.59, -23.52, 0,  objectHandler));
-        sensors.add(new Sensor(x, y, 40.15, -8.29, 1, objectHandler));
-        sensors.add(new Sensor(x, y, 41, 0, 2, objectHandler));
-        sensors.add(new Sensor(x, y, 40.15, 8.29, 3, objectHandler));
-        sensors.add(new Sensor(x, y, 33.59, 23.52, 4, objectHandler));
+        sensors.add(new Sensor(x, y, 33.59, -23.52, 0,  scene));
+        sensors.add(new Sensor(x, y, 40.15, -8.29, 1, scene));
+        sensors.add(new Sensor(x, y, 41, 0, 2, scene));
+        sensors.add(new Sensor(x, y, 40.15, 8.29, 3, scene));
+        sensors.add(new Sensor(x, y, 33.59, 23.52, 4, scene));
     }
 
     public void addWheels(ObjectHandler objectHandler) {
         wheels = new ArrayList<>();
-        wheels.add(new Wheel(x - 10, y - SIZE/2 - 5, objectHandler));
-        wheels.add(new Wheel(x - 10, y + SIZE/2 - 5, objectHandler));
+        wheels.add(new Wheel(x - 10, y - SIZE/2 - 5, scene));
+        wheels.add(new Wheel(x - 10, y + SIZE/2 - 5, scene));
     }
 
     public void updateAngularVelocity() {

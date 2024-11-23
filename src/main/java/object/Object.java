@@ -1,15 +1,17 @@
 package object;
 
+import scene.Scene;
+
 import java.awt.*;
 
 public abstract class Object {
 
     double x,y;
 
-    public Object(double x, double y, ObjectHandler objectHandler) {
+    public Object(double x, double y, Scene scene) {
         this.x = x;
         this.y = y;
-        objectHandler.addObject(this);
+        scene.getObjectHandler().addObject(this);
     }
 
     public abstract void update();

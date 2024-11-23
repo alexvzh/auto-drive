@@ -16,26 +16,28 @@ public class MenuScene extends Scene {
         this.setLayout(null);
         spawnBalls();
         addButton((getPreferredSize().width/2)-125,(getPreferredSize().height/3)-50, 250, 100, "Demo", e -> sceneManager.setScene("demo"));
+        addButton((getPreferredSize().width/2)-125,(getPreferredSize().height/2)-50, 250, 100, "Pause!", e -> setRunning(!isRunning()));
+
     }
 
     @Override
     public void update() {
-        objectHandler.update();
+        getObjectHandler().update();
     }
 
     @Override
     public void draw(Graphics2D g2d) {
-        objectHandler.draw(g2d);
+        getObjectHandler().draw(g2d);
     }
 
     @Override
     public void init() {
-
+        setFPS(10000);
     }
 
     private void spawnBalls() {
         for (int i = 0; i < 150; i ++) {
-            new MenuBall(r.nextInt(1100), r.nextInt(800), objectHandler);
+            new MenuBall(r.nextInt(1100), r.nextInt(800), this);
         }
     }
 }

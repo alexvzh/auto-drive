@@ -1,5 +1,7 @@
 package object;
 
+import scene.Scene;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -21,12 +23,12 @@ public class Sensor extends Object {
     private boolean isActive;
     private boolean wasActive;
 
-    public Sensor(double x, double y, double offsetX, double offsetY, int id,  ObjectHandler objectHandler) {
-        super(x + offsetX, y + offsetY, objectHandler);
+    public Sensor(double x, double y, double offsetX, double offsetY, int id,  Scene scene) {
+        super(x + offsetX, y + offsetY, scene);
         this.offsetX = offsetX;
         this.offsetY = offsetY;
         this.id = id;
-        this.neville = objectHandler.getNeville();
+        this.neville = scene.getObjectHandler().getNeville();
         this.baseSpeed = neville.getBaseSpeed();
 
         try {

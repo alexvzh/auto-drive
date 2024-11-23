@@ -1,14 +1,16 @@
 package object;
 
+import scene.Scene;
+
 import java.awt.*;
 
 public class Wheel extends Object {
 
     double velocity;
 
-    public Wheel(double x, double y, ObjectHandler objectHandler) {
-        super(x, y, objectHandler);
-        this.velocity = objectHandler.getNeville().getBaseSpeed();
+    public Wheel(double x, double y, Scene scene) {
+        super(x, y, scene);
+        this.velocity = scene.getObjectHandler().getNeville().getBaseSpeed();
     }
 
     @Override

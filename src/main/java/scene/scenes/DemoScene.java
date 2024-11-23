@@ -13,19 +13,19 @@ public class DemoScene extends Scene {
     public DemoScene(String id, SceneManager sceneManager) {
         super(0, 0, id, sceneManager);
 
-        this.neville = new Neville(0, 0, objectHandler);
+        this.neville = new Neville(177, 0, this);
         init();
     }
 
     @Override
     public void update() {
-        objectHandler.update();
+        getObjectHandler().update();
     }
 
     @Override
     public void draw(Graphics2D g2d) {
         g2d.drawImage(neville.getSensors().get(0).getBackround(), 0, 0, null);
-        objectHandler.draw(g2d);
+        getObjectHandler().draw(g2d);
 
         double timer = neville.getEndTime() - neville.getStartTime();
         if (neville.isActive()) timer = (System.nanoTime() - neville.getStartTime());

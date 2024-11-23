@@ -1,5 +1,7 @@
 package object;
 
+import scene.Scene;
+
 import java.awt.*;
 import java.util.Arrays;
 import java.util.Random;
@@ -11,13 +13,13 @@ public class MenuBall extends Object {
     private double velX;
     private double velY;
 
-    public MenuBall(double x, double y, ObjectHandler objectHandler) {
-        super(x, y, objectHandler);
+    public MenuBall(double x, double y, Scene scene) {
+        super(x, y, scene);
         Random r = new Random();
         this.size = r.nextInt(10) + 8;
         velX = (double) (r.nextInt(60) + 5)/ 100;
         velY = (double) (r.nextInt(60) + 5)/ 100;
-        objectHandler.addObject(this);
+        scene.getObjectHandler().addObject(this);
         this.color = Arrays.asList(Color.DARK_GRAY, Color.LIGHT_GRAY, Color.WHITE).get(r.nextInt(3));
     }
 
