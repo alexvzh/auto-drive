@@ -10,8 +10,8 @@ public class Neville extends Object {
 
     private ArrayList<Sensor> sensors;
     private ArrayList<Wheel> wheels;
-    private double w; //angular velocity
-    private double v; //linear velocity
+    private double angularVelocity;
+    private double linearVelocity;
     private double orientation;
     private boolean active;
     private double startTime;
@@ -62,22 +62,22 @@ public class Neville extends Object {
     public void updateAngularVelocity() {
         Wheel wheelOne = wheels.get(0);
         Wheel wheelTwo = wheels.get(1);
-        w = (wheelOne.getVelocity() - wheelTwo.getVelocity()) / wheelOne.calculateDistance(wheelTwo);
+        angularVelocity = (wheelOne.getVelocity() - wheelTwo.getVelocity()) / wheelOne.calculateDistance(wheelTwo);
     }
 
     public void updateLinearVelocity() {
-        v = (wheels.get(0).getVelocity() + wheels.get(1).getVelocity())/2;
+        linearVelocity = (wheels.get(0).getVelocity() + wheels.get(1).getVelocity())/2;
     }
 
     public void updateOrientation() {
         // delta time = 60
-        orientation += w * 60;
+        orientation += angularVelocity * 60;
     }
 
     public void updatePosition() {
         // delta time = 60
-        x += v*Math.cos(orientation) * 60;
-        y += v*Math.sin(orientation) * 60;
+        x += linearVelocity * Math.cos(orientation) * 60;
+        y += linearVelocity * Math.sin(orientation) * 60;
 
         for (Sensor sensor : sensors) {
 
