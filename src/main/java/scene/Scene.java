@@ -8,12 +8,13 @@ import java.awt.event.ActionListener;
 
 public abstract class Scene extends JPanel implements Runnable {
 
-    private final int FPS = 100000;
-    private final double DELTA_TIME = (double) 1 / FPS;
+    private final int FPS;
+    private final double DELTA_TIME;
 
     private Thread thread;
     private boolean running;
     private final String id;
+    private int updateCount = 0;
     private final SceneManager sceneManager;
     private final ObjectHandler objectHandler;
     private final SceneFrequency sceneFrequency;
@@ -27,6 +28,8 @@ public abstract class Scene extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.setFocusable(true);
 
+        this.FPS = sceneFrequency.equals(SceneFrequency.HIGH) ? 100000 : 100;
+        this.DELTA_TIME = (double) 1 / FPS;
         this.running = false;
         this.id = id;
         this.sceneManager = sceneManager;
@@ -48,20 +51,10 @@ public abstract class Scene extends JPanel implements Runnable {
 
         double drawInterval = 1000000000 / FPS;
         double nextDrawTime = System.nanoTime() + drawInterval;
-        int updatesPerRender = 100;
-        int updateCount = 0;
 
         while (thread != null) {
 
-            if (running) {
-                update();
-                updateCount++;
-
-                if (updateCount >= updatesPerRender) {
-                    repaint();
-                    updateCount = 0;
-                }
-            }
+            if (running) processFrame(sceneFrequency);
 
             try {
 
@@ -118,6 +111,23 @@ public abstract class Scene extends JPanel implements Runnable {
         button.setBounds(x, y, width, height);
         button.addActionListener(actionListener);
         this.add(button);
+    }
+
+    private void processFrame(SceneFrequency sceneFrequency) {
+
+        if (sceneFrequency.equals(SceneFrequency.LOW)) {
+            update();
+            repaint();
+        } else {
+            update();
+            updateCount++;
+
+            int updatesPerRender = 100;
+            if (updateCount >= updatesPerRender) {
+                repaint();
+                updateCount = 0;
+            }
+        }
     }
 
     public abstract void update();
