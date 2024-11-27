@@ -8,11 +8,13 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 public class Sensor extends Object {
 
     public final static ArrayList<Integer> recentActivity = new ArrayList<>(Collections.nCopies(4, 0));
+    private final static ArrayList<Double> angles = new ArrayList<>(Arrays.asList(-35.0, -35.0 / 3, 0.0, 35.0 / 3, 35.0));
     public static int currentIndex = 0;
 
     private final double offsetX;
@@ -24,13 +26,15 @@ public class Sensor extends Object {
     private boolean isActive;
     private boolean wasActive;
 
-    public Sensor(double x, double y, double offsetX, double offsetY, int id,  Scene scene) {
-        super(x + offsetX, y + offsetY, scene);
-        this.offsetX = offsetX;
-        this.offsetY = offsetY;
+    public Sensor(int id,  Scene scene) {
+        super(0, 0, scene);
         this.id = id;
         this.neville = scene.getObjectHandler().getNeville();
         this.baseSpeed = neville.getBaseSpeed();
+        this.offsetX = calculateSensorOffsets().get(0);
+        this.offsetY = calculateSensorOffsets().get(1);
+        this.x = neville.getX() + offsetX;
+        this.y = neville.getY() + offsetY;
 
         try {
             backround = ImageIO.read(getClass().getResourceAsStream("/map.png"));
@@ -109,5 +113,20 @@ public class Sensor extends Object {
             if (neville.getSensors().get(1).isActive) neville.setSpeed(baseSpeed / 1.3, baseSpeed);
             else if (neville.getSensors().get(3).isActive) neville.setSpeed(baseSpeed, baseSpeed / 1.3);
         }
+    }
+
+    private ArrayList<Double> calculateSensorOffsets() {
+
+        // Base sensor offsets
+        double x0 = neville.getSIZE() * 0.4555555555;
+        double y0 = 0.0;
+
+        double distance = (double) neville.getSIZE() * 0.4555555555;
+        double angleRadians = Math.toRadians(angles.get(id));
+
+        double xNew = x0 * Math.cos(angleRadians);
+        double yNew = y0 + distance * Math.sin(angleRadians);
+
+        return new ArrayList<>(Arrays.asList(xNew, yNew));
     }
 }
