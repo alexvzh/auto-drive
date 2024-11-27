@@ -104,6 +104,10 @@ public class Neville extends Object {
         return wheels;
     }
 
+    public double getOrientation() {
+        return orientation;
+    }
+
     public double getBaseSpeed() {
         return BASE_SPEED;
     }
