@@ -108,6 +108,10 @@ public class Neville extends Object {
         return orientation;
     }
 
+    public void setOrientation(double orientation) {
+        this.orientation = orientation;
+    }
+
     public double getBaseSpeed() {
         return BASE_SPEED;
     }
