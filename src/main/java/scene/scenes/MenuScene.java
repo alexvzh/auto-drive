@@ -1,6 +1,6 @@
 package scene.scenes;
 
-import object.MenuBall;
+import object.objects.MenuBall;
 import scene.Scene;
 import scene.SceneFrequency;
 import scene.SceneManager;

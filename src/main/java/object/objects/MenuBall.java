@@ -1,5 +1,6 @@
-package object;
+package object.objects;
 
+import object.Object;
 import scene.Scene;
 
 import java.awt.*;

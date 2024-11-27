@@ -1,5 +1,7 @@
-package object;
+package object.objects;
 
+import object.Object;
+import object.ObjectHandler;
 import scene.Scene;
 
 import java.awt.*;

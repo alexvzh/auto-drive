@@ -1,6 +1,6 @@
 package scene.scenes;
 
-import object.Neville;
+import object.objects.Neville;
 import scene.Scene;
 import scene.SceneFrequency;
 import scene.SceneManager;
