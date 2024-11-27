@@ -158,8 +158,7 @@ public class Neville extends Object {
     }
 
     public void stop() {
-        this.getWheels().get(0).setVelocity(0);
-        this.getWheels().get(1).setVelocity(0);
-        setActive(false);
+        this.setSpeed(0, 0);
+        this.setActive(false);
     }
 }
