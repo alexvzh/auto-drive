@@ -115,6 +115,10 @@ public class Neville extends Object {
         return BASE_SPEED;
     }
 
+    public int getSIZE() {
+        return SIZE;
+    }
+
     public double getStartTime() {
         return startTime;
     }
