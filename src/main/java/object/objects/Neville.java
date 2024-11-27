@@ -1,7 +1,6 @@
 package object.objects;
 
 import object.Object;
-import object.ObjectHandler;
 import scene.Scene;
 
 import java.awt.*;
@@ -25,8 +24,8 @@ public class Neville extends Object {
     public Neville(double x, double y, Scene scene) {
         super(x, y, scene);
         this.scene = scene;
-        addSensors(scene.getObjectHandler());
-        addWheels(scene.getObjectHandler());
+        addSensors();
+        addWheels();
     }
 
     @Override
@@ -48,7 +47,7 @@ public class Neville extends Object {
         g2d.fillOval((int) (x - (float) SIZE / 2), (int) (y - (float) SIZE / 2), SIZE, SIZE);
     }
 
-    public void addSensors(ObjectHandler objectHandler) {
+    public void addSensors() {
         sensors = new ArrayList<>();
         sensors.add(new Sensor(x, y, 33.59, -23.52, 0,  scene));
         sensors.add(new Sensor(x, y, 40.15, -8.29, 1, scene));
@@ -57,7 +56,7 @@ public class Neville extends Object {
         sensors.add(new Sensor(x, y, 33.59, 23.52, 4, scene));
     }
 
-    public void addWheels(ObjectHandler objectHandler) {
+    public void addWheels() {
         wheels = new ArrayList<>();
         wheels.add(new Wheel(x - 10, y - SIZE/2 - 5, scene));
         wheels.add(new Wheel(x - 10, y + SIZE/2 - 5, scene));
