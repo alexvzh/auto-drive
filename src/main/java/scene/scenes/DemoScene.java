@@ -21,6 +21,7 @@ public class DemoScene extends Scene {
     @Override
     public void update() {
         getObjectHandler().update();
+        if (neville.destinationReached()) init();
     }
 
     @Override
@@ -39,9 +40,12 @@ public class DemoScene extends Scene {
 
     @Override
     public void init() {
-        neville.updateStartTime();
+        neville.setOrientation(0);
+        neville.setSpeed(neville.getBaseSpeed(), neville.getBaseSpeed());
         neville.setX(177);
         neville.setY(381);
+        neville.setActive(true);
+        neville.updateStartTime();
     }
 
 }

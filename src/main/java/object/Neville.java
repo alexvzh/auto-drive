@@ -25,8 +25,6 @@ public class Neville extends Object {
         this.scene = scene;
         addSensors(scene.getObjectHandler());
         addWheels(scene.getObjectHandler());
-        this.orientation = 0;
-        this.active = true;
     }
 
     @Override
