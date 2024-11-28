@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Neville extends Object {
 
     private final int SIZE = 90;
-    private final double BASE_SPEED = 900;
+    private final double BASE_SPEED = 700;
 
     private final Scene scene;
     private ArrayList<Sensor> sensors;
@@ -49,11 +49,9 @@ public class Neville extends Object {
 
     public void addSensors() {
         sensors = new ArrayList<>();
-        sensors.add(new Sensor(x, y, 33.59, -23.52, 0,  scene));
-        sensors.add(new Sensor(x, y, 40.15, -8.29, 1, scene));
-        sensors.add(new Sensor(x, y, 41, 0, 2, scene));
-        sensors.add(new Sensor(x, y, 40.15, 8.29, 3, scene));
-        sensors.add(new Sensor(x, y, 33.59, 23.52, 4, scene));
+        for (int i = 0; i < 5; i ++) {
+            sensors.add(new Sensor(i, scene));
+        }
     }
 
     public void addWheels() {
