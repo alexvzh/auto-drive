@@ -7,7 +7,11 @@ import java.util.ArrayList;
 
 public class ObjectHandler {
 
-    private final ArrayList<Object> objects = new ArrayList<>();
+    private final ArrayList<Object> objects;
+
+    public ObjectHandler(int initalCapacity) {
+        this.objects = new ArrayList<>(initalCapacity);
+    }
 
     public void update() {
         for (int i = 0; i < objects.size(); i++) {
