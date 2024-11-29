@@ -11,10 +11,9 @@ public class DemoScene extends Scene {
 
     private final Neville neville;
 
-    public DemoScene(String id, SceneFrequency sceneFrequency, SceneManager sceneManager) {
-        super(0, 0, id, sceneFrequency, sceneManager);
-
-        this.neville = new Neville(177, 0, this);
+    public DemoScene(String id, int initialObjectCapacity, SceneFrequency sceneFrequency, SceneManager sceneManager) {
+        super(0, 0,initialObjectCapacity, id, sceneFrequency, sceneManager);
+        this.neville = new Neville(0, 0, this);
         init();
     }
 
@@ -35,7 +34,6 @@ public class DemoScene extends Scene {
         g2d.setColor(Color.BLACK);
         g2d.setFont(new Font("Calibri", Font.PLAIN, 20));
         g2d.drawString((int) (timer / 1000000000  * 10000) / 10000.0 + " Seconds ", 5, 40);
-
     }
 
     @Override

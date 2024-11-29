@@ -10,10 +10,10 @@ import java.util.Random;
 
 public class MenuScene extends Scene {
 
-    Random r = new Random();
+    private final Random r = new Random();
 
-    public MenuScene(String id, SceneFrequency sceneFrequency, SceneManager sceneManager) {
-        super(0, 0, id, sceneFrequency, sceneManager);
+    public MenuScene(String id, int initialObjectCapacity, SceneFrequency sceneFrequency, SceneManager sceneManager) {
+        super(0, 0, initialObjectCapacity, id, sceneFrequency, sceneManager);
         this.setLayout(null);
         spawnBalls();
         addButton((getPreferredSize().width/2)-125,(getPreferredSize().height/3)-50, 250, 100, "Demo", e -> sceneManager.setScene("demo"));
@@ -37,7 +37,7 @@ public class MenuScene extends Scene {
     }
 
     private void spawnBalls() {
-        for (int i = 0; i < 150; i ++) {
+        for (int i = 0; i < 250; i ++) {
             new MenuBall(r.nextInt(1100), r.nextInt(800), this);
         }
     }
