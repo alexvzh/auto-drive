@@ -2,8 +2,6 @@ package object;
 
 import scene.Scene;
 
-import java.awt.*;
-
 public abstract class Object {
 
     public double x,y;
