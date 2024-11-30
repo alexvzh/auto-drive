@@ -12,7 +12,7 @@ public class DemoScene extends Scene {
     private final Neville neville;
 
     public DemoScene(String id, int initialObjectCapacity, SceneFrequency sceneFrequency, SceneManager sceneManager) {
-        super(0, 0,initialObjectCapacity, id, sceneFrequency, sceneManager);
+        super(id ,initialObjectCapacity, sceneFrequency, sceneManager);
         this.neville = new Neville(0, 0, this);
         init();
     }

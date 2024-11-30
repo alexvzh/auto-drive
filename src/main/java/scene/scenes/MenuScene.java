@@ -13,7 +13,7 @@ public class MenuScene extends Scene {
     private final Random r = new Random();
 
     public MenuScene(String id, int initialObjectCapacity, SceneFrequency sceneFrequency, SceneManager sceneManager) {
-        super(0, 0, initialObjectCapacity, id, sceneFrequency, sceneManager);
+        super(id, initialObjectCapacity, sceneFrequency, sceneManager);
         this.setLayout(null);
         spawnBalls();
         addButton((getPreferredSize().width/2)-125,(getPreferredSize().height/3)-50, 250, 100, "Demo", e -> sceneManager.setScene("demo"));
