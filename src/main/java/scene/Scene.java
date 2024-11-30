@@ -19,10 +19,7 @@ public abstract class Scene extends JPanel implements Runnable {
     private final ObjectHandler objectHandler;
     private final SceneFrequency sceneFrequency;
 
-    public Scene(int width, int height, int initialObjectCapacity, String id, SceneFrequency sceneFrequency, SceneManager sceneManager) {
-        if (width == 0 || height == 0) {
-            this.setPreferredSize(new Dimension(1128, 848));
-        } else this.setPreferredSize(new Dimension(width, height));
+    public Scene(int width, int height, String id, int initialObjectCapacity, SceneFrequency sceneFrequency, SceneManager sceneManager) {
 
         this.setBackground(Color.GRAY);
         this.setDoubleBuffered(true);
