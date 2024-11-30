@@ -2,6 +2,7 @@ package scene;
 
 import scene.scenes.DemoScene;
 import scene.scenes.MenuScene;
+import scene.scenes.TrackEditor;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class SceneManager {
         this.scenes = new ArrayList<>();
         currentScene = new MenuScene("menu",  300, SceneFrequency.LOW, this);
         new DemoScene("demo", 10, SceneFrequency.HIGH, this);
+        new TrackEditor("editor", 100, SceneFrequency.LOW, this);
     }
 
     public void setScene(String sceneID) {
