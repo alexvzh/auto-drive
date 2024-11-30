@@ -24,7 +24,6 @@ public class SceneManager {
         frame.remove(currentScene);
         frame.add(scene);
         frame.pack();
-        frame.setLocationRelativeTo(null);
         scene.init();
         scene.startThread();
         currentScene = scene;
