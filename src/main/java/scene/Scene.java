@@ -21,6 +21,7 @@ public abstract class Scene extends JPanel implements Runnable {
 
     public Scene(int width, int height, String id, int initialObjectCapacity, SceneFrequency sceneFrequency, SceneManager sceneManager) {
 
+        this.setPreferredSize(new Dimension(width, height));
         this.setBackground(Color.GRAY);
         this.setDoubleBuffered(true);
         this.setFocusable(true);
@@ -35,6 +36,10 @@ public abstract class Scene extends JPanel implements Runnable {
 
         sceneManager.addScene(this);
 
+    }
+
+    public Scene(String id, int initialObjectCapacity, SceneFrequency sceneFrequency, SceneManager sceneManager) {
+        this(1128, 848, id, initialObjectCapacity, sceneFrequency, sceneManager);
     }
 
     public void startThread() {
