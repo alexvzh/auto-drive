@@ -1,6 +1,8 @@
 package object.objects;
 
 import object.Object;
+import object.behaviour.Drawable;
+import object.behaviour.Updatable;
 import scene.Scene;
 
 import javax.imageio.ImageIO;
@@ -11,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class Sensor extends Object {
+public class Sensor extends Object implements Updatable, Drawable {
 
     public final static ArrayList<Integer> recentActivity = new ArrayList<>(Collections.nCopies(4, 0));
     private final static ArrayList<Double> angles = new ArrayList<>(Arrays.asList(-35.0, -35.0 / 3, 0.0, 35.0 / 3, 35.0));
