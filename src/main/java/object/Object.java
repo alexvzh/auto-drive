@@ -14,9 +14,6 @@ public abstract class Object {
         scene.getObjectHandler().addObject(this);
     }
 
-    public abstract void update();
-    public abstract void draw(Graphics2D g2d);
-
     public double getX() {
         return x;
     }
