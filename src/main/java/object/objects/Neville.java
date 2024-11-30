@@ -1,12 +1,14 @@
 package object.objects;
 
 import object.Object;
+import object.behaviour.Drawable;
+import object.behaviour.Updatable;
 import scene.Scene;
 
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Neville extends Object {
+public class Neville extends Object implements Updatable, Drawable {
 
     private final int SIZE = 90;
     private final double BASE_SPEED = 700;
