@@ -24,7 +24,8 @@ public class ObjectHandler {
 
     public void draw(Graphics2D g2d) {
         for (int i = 0; i < objects.size(); i++) {
-            objects.get(i).draw(g2d);
+            if (!(objects.get(i) instanceof Drawable)) continue;
+            ((Drawable)objects.get(i)).draw(g2d);
         }
     }
 
