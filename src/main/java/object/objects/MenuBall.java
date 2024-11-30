@@ -1,6 +1,8 @@
 package object.objects;
 
 import object.Object;
+import object.behaviour.Drawable;
+import object.behaviour.Updatable;
 import scene.Scene;
 
 import java.awt.*;
@@ -8,7 +10,7 @@ import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.util.Random;
 
-public class MenuBall extends Object {
+public class MenuBall extends Object implements Updatable, Drawable {
 
     private final Scene scene;
     private final Color color;
