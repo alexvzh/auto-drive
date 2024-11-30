@@ -1,5 +1,7 @@
 package object;
 
+import object.behaviour.Drawable;
+import object.behaviour.Updatable;
 import object.objects.Neville;
 
 import java.awt.*;
@@ -15,7 +17,8 @@ public class ObjectHandler {
 
     public void update() {
         for (int i = 0; i < objects.size(); i++) {
-            objects.get(i).update();
+            if (!(objects.get(i) instanceof Updatable)) continue;
+            ((Updatable)objects.get(i)).update();
         }
     }
 
