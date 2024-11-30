@@ -3,8 +3,6 @@ package object.objects;
 import object.Object;
 import scene.Scene;
 
-import java.awt.*;
-
 public class Wheel extends Object {
 
     double velocity;
@@ -12,15 +10,6 @@ public class Wheel extends Object {
     public Wheel(double x, double y, Scene scene) {
         super(x, y, scene);
         this.velocity = scene.getObjectHandler().getNeville().getBaseSpeed();
-    }
-
-    @Override
-    public void update() {
-
-    }
-
-    @Override
-    public void draw(Graphics2D g2d) {
     }
 
     public double getVelocity() {
