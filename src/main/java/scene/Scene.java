@@ -49,7 +49,7 @@ public abstract class Scene extends JPanel implements Runnable {
     @Override
     public void run() {
 
-        double drawInterval = 1000000000 / FPS;
+        double drawInterval = (double) 1_000_000_000 / FPS;
         double nextDrawTime = System.nanoTime() + drawInterval;
 
         while (thread != null) {
@@ -59,7 +59,7 @@ public abstract class Scene extends JPanel implements Runnable {
             try {
 
                 double remainingTime = nextDrawTime - System.nanoTime();
-                remainingTime /= 1000000;
+                remainingTime /= 1_000_000;
 
                 if (remainingTime < 0) {
                     remainingTime = 0;
