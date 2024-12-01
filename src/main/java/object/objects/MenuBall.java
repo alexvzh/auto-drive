@@ -26,7 +26,6 @@ public class MenuBall extends Object implements Updatable, Drawable {
         this.size = r.nextInt(10) + 8;
         this.velX = (double) (r.nextInt(400) - 200) / 100;
         this.velY = (double) (r.nextInt(400) - 200) / 100;
-        scene.getObjectHandler().addObject(this);
         this.color = Arrays.asList(Color.DARK_GRAY, Color.LIGHT_GRAY, Color.WHITE).get(r.nextInt(3));
         this.circleImage =  createCircleImage(size, color);
     }
