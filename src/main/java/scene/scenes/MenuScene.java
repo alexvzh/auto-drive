@@ -14,7 +14,6 @@ public class MenuScene extends Scene {
 
     public MenuScene(String id, int initialObjectCapacity, SceneFrequency sceneFrequency, SceneManager sceneManager) {
         super(id, initialObjectCapacity, sceneFrequency, sceneManager);
-        this.setLayout(null);
         spawnBalls();
         addButton((getPreferredSize().width/2)-125,(getPreferredSize().height/3)-50, 250, 100, "Demo", e -> sceneManager.setScene("demo"));
         addButton((getPreferredSize().width/2)-125,(getPreferredSize().height/2)-50, 250, 100, "Pause!", e -> setRunning(!isRunning()));
