@@ -17,7 +17,7 @@ public class MenuBall extends Object implements Updatable, Drawable {
     private final int size;
     private double velX;
     private double velY;
-    private final BufferedImage circleImage;
+    private BufferedImage circleImage;
 
     public MenuBall(double x, double y, Scene scene) {
         super(x, y, scene);
@@ -27,7 +27,7 @@ public class MenuBall extends Object implements Updatable, Drawable {
         this.velX = (double) (r.nextInt(400) - 200) / 100;
         this.velY = (double) (r.nextInt(400) - 200) / 100;
         this.color = Arrays.asList(Color.DARK_GRAY, Color.LIGHT_GRAY, Color.WHITE).get(r.nextInt(3));
-        this.circleImage =  createCircleImage(size, color);
+        createCircleImage(size, color);
     }
 
     @Override
@@ -45,22 +45,18 @@ public class MenuBall extends Object implements Updatable, Drawable {
     public void draw(Graphics2D g2d) {
         g2d.setColor(color);
         g2d.drawImage(circleImage, (int) x, (int) y, null);
-
     }
 
 
-    public static BufferedImage createCircleImage(int diameter, Color color) {
-        BufferedImage circleImage = new BufferedImage(diameter, diameter, BufferedImage.TYPE_INT_ARGB);
+    private void createCircleImage(int size, Color color) {
+        circleImage = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = circleImage.createGraphics();
         // Enable antialiasing for smooth edges
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         g2d.setColor(color);
-        g2d.fillOval(0, 0, diameter, diameter);
+        g2d.fillOval(0, 0, size, size);
 
         g2d.dispose();
-        return circleImage;
-
     }
-
 }
