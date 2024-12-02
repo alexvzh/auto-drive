@@ -52,7 +52,7 @@ public class Expander extends Object implements Updatable, Drawable, Selectable 
 
     @Override
     public Rectangle getBounds() {
-        return null;
+        return new Rectangle((int) getX(), (int) getY(), SIZE, SIZE/2);
     }
 
     private static BufferedImage createIcon(ExpansionState state) {
