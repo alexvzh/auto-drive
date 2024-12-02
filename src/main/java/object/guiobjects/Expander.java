@@ -16,11 +16,17 @@ public class Expander extends Object implements Updatable, Drawable, Selectable 
         EXPANDED
     }
 
+    enum HoverState {
+        HOVERED,
+        NOT_HOVERED
+    }
+
     private static final BufferedImage COLLAPSED_ICON = createIcon(ExpansionState.COLLAPSED);
     private static final BufferedImage EXPANDED_ICON = createIcon(ExpansionState.EXPANDED);
     private static final int SIZE = 50;
 
     private ExpansionState expansionState = ExpansionState.COLLAPSED;
+    private HoverState hoverState = HoverState.NOT_HOVERED;
 
     public Expander(double x, double y, Scene scene) {
         super(x, y, scene);
