@@ -7,10 +7,13 @@ import scene.Scene;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class MenuBall extends Object implements Updatable, Drawable {
+
+    private static final Random RANDOM = new Random();
+    private static final List<Color> COLORS = List.of(Color.DARK_GRAY, Color.LIGHT_GRAY, Color.WHITE);
 
     private final Scene scene;
     private final Color color;
@@ -22,11 +25,10 @@ public class MenuBall extends Object implements Updatable, Drawable {
     public MenuBall(double x, double y, Scene scene) {
         super(x, y, scene);
         this.scene = scene;
-        Random r = new Random();
-        this.size = r.nextInt(10) + 8;
-        this.velX = (double) (r.nextInt(400) - 200) / 100;
-        this.velY = (double) (r.nextInt(400) - 200) / 100;
-        this.color = Arrays.asList(Color.DARK_GRAY, Color.LIGHT_GRAY, Color.WHITE).get(r.nextInt(3));
+        this.size = RANDOM.nextInt(10) + 8;
+        this.velX = (double) (RANDOM.nextInt(400) - 200) / 100;
+        this.velY = (double) (RANDOM.nextInt(400) - 200) / 100;
+        this.color = COLORS.get(RANDOM.nextInt(3));
         createCircleImage(size, color);
     }
 
