@@ -9,6 +9,7 @@ import scene.Scene;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class Expander extends Object implements Updatable, Drawable, Clickable, Hoverable {
 
@@ -25,6 +26,8 @@ public class Expander extends Object implements Updatable, Drawable, Clickable, 
     private static final BufferedImage COLLAPSED_ICON = createIcon(ExpansionState.COLLAPSED);
     private static final BufferedImage EXPANDED_ICON = createIcon(ExpansionState.EXPANDED);
     private static final int SIZE = 50;
+
+    private final ArrayList<ExpanderElement> elements = new ArrayList<>();
 
     private ExpansionState expansionState = ExpansionState.COLLAPSED;
     private HoverState hoverState = HoverState.NOT_HOVERED;
