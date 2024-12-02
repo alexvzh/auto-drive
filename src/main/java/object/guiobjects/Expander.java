@@ -18,6 +18,8 @@ public class Expander extends Object implements Updatable, Drawable {
     private static final BufferedImage collapsedIcon = createIcon(ExpansionState.COLLAPSED);
     private static final BufferedImage expandedIcon = createIcon(ExpansionState.EXPANDED);
 
+    private ExpansionState expansionState = ExpansionState.COLLAPSED;
+
     public Expander(double x, double y, Scene scene) {
         super(x, y, scene);
     }
