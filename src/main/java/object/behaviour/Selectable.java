@@ -3,7 +3,8 @@ package object.behaviour;
 import java.awt.*;
 
 public interface Selectable {
-    void onHover(Graphics2D g2d);
+    void onHover();
+    void onUnhover();
     void onClick();
     Rectangle getBounds();
 }
