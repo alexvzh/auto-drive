@@ -15,6 +15,7 @@ public abstract class Scene extends JPanel implements Runnable {
     private boolean running;
     private final String id;
     private int updateCount = 0;
+    private Color backroundColor;
     private final SceneManager sceneManager;
     private final ObjectHandler objectHandler;
     private final SceneFrequency sceneFrequency;
@@ -31,6 +32,7 @@ public abstract class Scene extends JPanel implements Runnable {
         this.DELTA_TIME = (double) 1 / FPS;
         this.running = false;
         this.id = id;
+        this.backroundColor = Color.GRAY;
         this.sceneManager = sceneManager;
         this.sceneFrequency = sceneFrequency;
         this.objectHandler = new ObjectHandler(initialObjectCapacity);
@@ -82,6 +84,8 @@ public abstract class Scene extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
+        g2d.setColor(backroundColor);
+        g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
         draw(g2d);
     }
 
@@ -137,4 +141,7 @@ public abstract class Scene extends JPanel implements Runnable {
         return objectHandler;
     }
 
+    public void setBackroundColor(Color backroundColor) {
+        this.backroundColor = backroundColor;
+    }
 }
