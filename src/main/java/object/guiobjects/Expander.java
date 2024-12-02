@@ -1,15 +1,16 @@
 package object.guiobjects;
 
 import object.Object;
+import object.behaviour.Clickable;
 import object.behaviour.Drawable;
-import object.behaviour.Selectable;
+import object.behaviour.Hoverable;
 import object.behaviour.Updatable;
 import scene.Scene;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Expander extends Object implements Updatable, Drawable, Selectable {
+public class Expander extends Object implements Updatable, Drawable, Clickable, Hoverable {
 
     enum ExpansionState {
         COLLAPSED,

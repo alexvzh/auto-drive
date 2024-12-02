@@ -1,7 +1,8 @@
 package object;
 
+import object.behaviour.Clickable;
 import object.behaviour.Drawable;
-import object.behaviour.Selectable;
+import object.behaviour.Hoverable;
 import object.behaviour.Updatable;
 import object.objects.Neville;
 
@@ -32,8 +33,8 @@ public class ObjectHandler {
 
     public void pressObject(Point p) {
         for (int i = 0; i < objects.size(); i++) {
-            if (!(objects.get(i) instanceof Selectable)) continue;
-            Selectable object = (Selectable)objects.get(i);
+            if (!(objects.get(i) instanceof Clickable)) continue;
+            Clickable object = (Clickable)objects.get(i);
             if (object.getBounds().contains(p)) {
                 object.onClick();
             }
@@ -42,8 +43,8 @@ public class ObjectHandler {
 
     public void hoverObject(Point p) {
         for (int i = 0; i < objects.size(); i++) {
-            if (!(objects.get(i) instanceof Selectable)) continue;
-            Selectable object = (Selectable)objects.get(i);
+            if (!(objects.get(i) instanceof Hoverable)) continue;
+            Hoverable object = (Hoverable)objects.get(i);
             if (object.getBounds().contains(p)) {
                 object.onHover();
             } else object.onUnhover();
