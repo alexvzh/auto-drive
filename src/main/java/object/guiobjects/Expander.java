@@ -9,7 +9,7 @@ import scene.Scene;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Expander extends Object implements Updatable, Drawable {
+public class Expander extends Object implements Updatable, Drawable, Selectable {
 
     enum ExpansionState {
         COLLAPSED,
@@ -36,8 +36,22 @@ public class Expander extends Object implements Updatable, Drawable {
 
     }
 
+    @Override
+    public void onHover(Graphics2D g2d) {
+
+    }
+
+    @Override
+    public void onClick() {
+
+    }
+
+    @Override
+    public Rectangle getBounds() {
+        return null;
+    }
+
     private static BufferedImage createIcon(ExpansionState state) {
-        int size = 50;
 
         BufferedImage image = new BufferedImage(SIZE, SIZE/2, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = image.createGraphics();
