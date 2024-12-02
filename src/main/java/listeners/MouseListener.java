@@ -17,38 +17,28 @@ public class MouseListener implements java.awt.event.MouseListener, MouseMotionL
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
-        objectHandler.pressObject(e.getPoint());
-    }
-
-    @Override
     public void mouseMoved(MouseEvent e) {
         objectHandler.hoverObject(e.getPoint());
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        objectHandler.pressObject(e.getPoint());
     }
 
     @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
+    public void mouseReleased(MouseEvent e) {}
 
     @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
+    public void mouseClicked(MouseEvent e) {}
 
     @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
+    public void mouseEntered(MouseEvent e) {}
 
     @Override
-    public void mouseDragged(MouseEvent e) {
+    public void mouseExited(MouseEvent e) {}
 
-    }
+    @Override
+    public void mouseDragged(MouseEvent e) {}
 
 }
