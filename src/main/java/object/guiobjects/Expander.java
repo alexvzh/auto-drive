@@ -10,6 +10,11 @@ import java.awt.image.BufferedImage;
 
 public class Expander extends Object implements Updatable, Drawable {
 
+    enum ExpansionState {
+        COLLAPSED,
+        EXPANDED
+    }
+
     private static final BufferedImage collapsedIcon = createCollapsedIcon();
     private static final BufferedImage expandedIcon = createExpandedIcon();
 
