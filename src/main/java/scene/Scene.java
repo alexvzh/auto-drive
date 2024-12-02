@@ -43,6 +43,10 @@ public abstract class Scene extends JPanel implements Runnable {
         this(1128, 848, id, initialObjectCapacity, sceneFrequency, sceneManager);
     }
 
+    public abstract void update();
+    public abstract void draw(Graphics2D g2d);
+    public abstract void init();
+
     public void startThread() {
         thread = new Thread(this);
         thread.start();
@@ -81,6 +85,30 @@ public abstract class Scene extends JPanel implements Runnable {
         draw(g2d);
     }
 
+    public void addButton(int x, int y, int width, int height, String text, ActionListener actionListener) {
+        JButton button = new JButton(text);
+        button.setBounds(x, y, width, height);
+        button.addActionListener(actionListener);
+        this.add(button);
+    }
+
+    private void processFrame(SceneFrequency sceneFrequency) {
+
+        if (sceneFrequency.equals(SceneFrequency.LOW)) {
+            update();
+            repaint();
+        } else {
+            update();
+            updateCount++;
+
+            int updatesPerRender = 100;
+            if (updateCount >= updatesPerRender) {
+                repaint();
+                updateCount = 0;
+            }
+        }
+    }
+
     public String getId() {
         return id;
     }
@@ -108,33 +136,5 @@ public abstract class Scene extends JPanel implements Runnable {
     public ObjectHandler getObjectHandler() {
         return objectHandler;
     }
-
-    public void addButton(int x, int y, int width, int height, String text, ActionListener actionListener) {
-        JButton button = new JButton(text);
-        button.setBounds(x, y, width, height);
-        button.addActionListener(actionListener);
-        this.add(button);
-    }
-
-    private void processFrame(SceneFrequency sceneFrequency) {
-
-        if (sceneFrequency.equals(SceneFrequency.LOW)) {
-            update();
-            repaint();
-        } else {
-            update();
-            updateCount++;
-
-            int updatesPerRender = 100;
-            if (updateCount >= updatesPerRender) {
-                repaint();
-                updateCount = 0;
-            }
-        }
-    }
-
-    public abstract void update();
-    public abstract void draw(Graphics2D g2d);
-    public abstract void init();
 
 }
