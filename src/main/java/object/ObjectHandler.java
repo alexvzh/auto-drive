@@ -40,6 +40,16 @@ public class ObjectHandler {
         }
     }
 
+    public void hoverObject(Point p) {
+        for (int i = 0; i < objects.size(); i++) {
+            if (!(objects.get(i) instanceof Selectable)) continue;
+            Selectable object = (Selectable)objects.get(i);
+            if (object.getBounds().contains(p)) {
+                object.onHover();
+            } else object.onUnhover();
+        }
+    }
+
     public void addObject(Object object) {
         this.objects.add(object);
     }
