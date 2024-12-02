@@ -44,6 +44,12 @@ public class Expander extends Object implements Updatable, Drawable, Selectable 
         } else {
             g2d.drawImage(COLLAPSED_ICON, (int) getX(), (int) getY(), null);
         }
+
+        if (hoverState == HoverState.HOVERED) {
+            g2d.setStroke(new BasicStroke(2));
+            g2d.setColor(Color.BLACK);
+            g2d.draw(getBounds());
+        }
     }
 
     @Override
