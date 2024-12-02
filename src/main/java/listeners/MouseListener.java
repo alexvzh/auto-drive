@@ -22,6 +22,11 @@ public class MouseListener implements java.awt.event.MouseListener, MouseMotionL
     }
 
     @Override
+    public void mouseMoved(MouseEvent e) {
+        objectHandler.hoverObject(e.getPoint());
+    }
+
+    @Override
     public void mousePressed(MouseEvent e) {
 
     }
@@ -43,11 +48,6 @@ public class MouseListener implements java.awt.event.MouseListener, MouseMotionL
 
     @Override
     public void mouseDragged(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
 
     }
 
