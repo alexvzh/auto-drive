@@ -47,8 +47,13 @@ public class Expander extends Object implements Updatable, Drawable, Selectable 
     }
 
     @Override
-    public void onHover(Graphics2D g2d) {
+    public void onHover() {
+        this.hoverState = HoverState.HOVERED;
+    }
 
+    @Override
+    public void onUnhover() {
+        this.hoverState = HoverState.NOT_HOVERED;
     }
 
     @Override
