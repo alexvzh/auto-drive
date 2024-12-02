@@ -6,8 +6,11 @@ import object.behaviour.Updatable;
 import scene.Scene;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Expander extends Object implements Updatable, Drawable {
+
+    private static final BufferedImage collapsedIcon;
 
     public Expander(double x, double y, Scene scene) {
         super(x, y, scene);
@@ -23,8 +26,4 @@ public class Expander extends Object implements Updatable, Drawable {
 
     }
 
-    @Override
-    public void update() {
-
-    }
 }
