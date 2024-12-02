@@ -64,7 +64,8 @@ public class Expander extends Object implements Updatable, Drawable, Selectable 
 
     @Override
     public void onClick() {
-
+        if (expansionState == ExpansionState.COLLAPSED) expansionState = ExpansionState.EXPANDED;
+        else expansionState = ExpansionState.COLLAPSED;
     }
 
     @Override
