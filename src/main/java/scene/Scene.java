@@ -1,5 +1,6 @@
 package scene;
 
+import listeners.MouseListener;
 import object.ObjectHandler;
 
 import javax.swing.*;
@@ -36,6 +37,7 @@ public abstract class Scene extends JPanel implements Runnable {
         this.sceneManager = sceneManager;
         this.sceneFrequency = sceneFrequency;
         this.objectHandler = new ObjectHandler(initialObjectCapacity);
+        new MouseListener(this);
 
         sceneManager.addScene(this);
 
