@@ -36,8 +36,8 @@ public class Expander extends Object implements Updatable, Drawable, Clickable, 
 
     @Override
     public void update() {
-
         y+=vel;
+        clampPosition();
     }
 
     @Override
@@ -67,8 +67,8 @@ public class Expander extends Object implements Updatable, Drawable, Clickable, 
 
     @Override
     public void onClick() {
-        if (expansionState == ExpansionState.COLLAPSED) expansionState = ExpansionState.EXPANDED;
-        else expansionState = ExpansionState.COLLAPSED;
+        if (expansionState == ExpansionState.COLLAPSED) switchStateTo(ExpansionState.EXPANDED);
+        else switchStateTo(ExpansionState.COLLAPSED);
     }
 
     @Override
@@ -100,4 +100,20 @@ public class Expander extends Object implements Updatable, Drawable, Clickable, 
         return image;
     }
 
+    private void switchStateTo(ExpansionState state) {
+        int offset = expansionState == ExpansionState.EXPANDED ? 150 : -150;
+        this.vel = (double) offset / 25;
+        expansionState = state;
+        hoverState = HoverState.NOT_HOVERED;
+    }
+
+    private void clampPosition() {
+        if (y < 818 - 150) {
+            y = 818 - 150;
+            this.vel = 0;
+        } else if (y > 818) {
+            y = 818;
+            this.vel = 0;
+        }
+    }
 }
