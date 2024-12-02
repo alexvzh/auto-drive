@@ -33,7 +33,11 @@ public class Expander extends Object implements Updatable, Drawable, Selectable 
 
     @Override
     public void draw(Graphics2D g2d) {
-
+        if (expansionState == ExpansionState.EXPANDED) {
+            g2d.drawImage(EXPANDED_ICON, (int) getX(), (int) getY(), null);
+        } else {
+            g2d.drawImage(COLLAPSED_ICON, (int) getX(), (int) getY(), null);
+        }
     }
 
     @Override
