@@ -28,6 +28,7 @@ public class Expander extends Object implements Updatable, Drawable, Clickable, 
 
     private ExpansionState expansionState = ExpansionState.COLLAPSED;
     private HoverState hoverState = HoverState.NOT_HOVERED;
+    private double vel;
 
     public Expander(double x, double y, Scene scene) {
         super(x, y, scene);
@@ -36,6 +37,7 @@ public class Expander extends Object implements Updatable, Drawable, Clickable, 
     @Override
     public void update() {
 
+        y+=vel;
     }
 
     @Override
