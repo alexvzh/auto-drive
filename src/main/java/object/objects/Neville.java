@@ -77,8 +77,13 @@ public class Neville extends Object implements Updatable, Drawable {
     }
 
     public void updatePosition() {
-        x += linearVelocity * Math.cos(orientation) * scene.getDELTA_TIME();
-        y += linearVelocity * Math.sin(orientation) * scene.getDELTA_TIME();
+
+        double deltaTime = scene.getDELTA_TIME();
+        double cosOrientation = Math.cos(orientation);
+        double sinOrientation = Math.sin(orientation);
+
+        x += linearVelocity * cosOrientation * deltaTime;
+        y += linearVelocity * sinOrientation * deltaTime;
 
         for (Sensor sensor : sensors) {
 
@@ -86,8 +91,8 @@ public class Neville extends Object implements Updatable, Drawable {
             double sensorOffsetY = sensor.getOffsetY();
 
             // Rotate sensor's local offset by the robot's orientation to get its position in global coordinates
-            double sensorGlobalX = x + (sensorOffsetX * Math.cos(orientation) - sensorOffsetY * Math.sin(orientation));
-            double sensorGlobalY = y + (sensorOffsetX * Math.sin(orientation) + sensorOffsetY * Math.cos(orientation));
+            double sensorGlobalX = x + (sensorOffsetX * cosOrientation - sensorOffsetY * sinOrientation);
+            double sensorGlobalY = y + (sensorOffsetX * sinOrientation + sensorOffsetY * cosOrientation);
 
             sensor.setX(sensorGlobalX);
             sensor.setY(sensorGlobalY);
