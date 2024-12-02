@@ -14,7 +14,6 @@ public class DemoScene extends Scene {
     public DemoScene(String id, int initialObjectCapacity, SceneFrequency sceneFrequency, SceneManager sceneManager) {
         super(id ,initialObjectCapacity, sceneFrequency, sceneManager);
         this.neville = new Neville(0, 0, this);
-        init();
     }
 
     @Override
