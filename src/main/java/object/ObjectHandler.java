@@ -1,6 +1,7 @@
 package object;
 
 import object.behaviour.Drawable;
+import object.behaviour.Selectable;
 import object.behaviour.Updatable;
 import object.objects.Neville;
 
@@ -26,6 +27,16 @@ public class ObjectHandler {
         for (int i = 0; i < objects.size(); i++) {
             if (!(objects.get(i) instanceof Drawable)) continue;
             ((Drawable)objects.get(i)).draw(g2d);
+        }
+    }
+
+    public void pressObject(Point p) {
+        for (int i = 0; i < objects.size(); i++) {
+            if (!(objects.get(i) instanceof Selectable)) continue;
+            Selectable object = (Selectable)objects.get(i);
+            if (object.getBounds().contains(p)) {
+                object.onClick();
+            }
         }
     }
 
