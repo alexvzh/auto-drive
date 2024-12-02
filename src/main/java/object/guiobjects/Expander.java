@@ -2,6 +2,7 @@ package object.guiobjects;
 
 import object.Object;
 import object.behaviour.Drawable;
+import object.behaviour.Selectable;
 import object.behaviour.Updatable;
 import scene.Scene;
 
@@ -17,6 +18,8 @@ public class Expander extends Object implements Updatable, Drawable {
 
     private static final BufferedImage collapsedIcon = createIcon(ExpansionState.COLLAPSED);
     private static final BufferedImage expandedIcon = createIcon(ExpansionState.EXPANDED);
+    private static final BufferedImage COLLAPSED_ICON = createIcon(ExpansionState.COLLAPSED);
+    private static final BufferedImage EXPANDED_ICON = createIcon(ExpansionState.EXPANDED);
 
     private ExpansionState expansionState = ExpansionState.COLLAPSED;
 
