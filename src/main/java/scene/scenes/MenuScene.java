@@ -11,14 +11,12 @@ import java.util.Random;
 public class MenuScene extends Scene {
 
     private final Random r = new Random();
+    private final SceneManager sceneManager;
 
     public MenuScene(String id, int initialObjectCapacity, SceneFrequency sceneFrequency, SceneManager sceneManager) {
         super(id, initialObjectCapacity, sceneFrequency, sceneManager);
+        this.sceneManager = sceneManager;
         spawnBalls();
-        addButton((getPreferredSize().width/2)-125,(getPreferredSize().height/3)-50, 250, 100, "Demo", e -> sceneManager.setScene("demo"));
-        addButton((getPreferredSize().width/2)-125,(getPreferredSize().height/2)-50, 250, 100, "Pause!", e -> setRunning(!isRunning()));
-        addButton((getPreferredSize().width/2)-125,(getPreferredSize().height/3)*2-50, 250, 100, "Track Editor", e -> sceneManager.setScene("editor"));
-
     }
 
     @Override
@@ -33,6 +31,9 @@ public class MenuScene extends Scene {
 
     @Override
     public void init() {
+        addButton((getWidth()/2)-125,(getHeight()/3)-50, 250, 100, "Demo", e -> sceneManager.setScene("demo"));
+        addButton((getWidth()/2)-125,(getHeight()/2)-50, 250, 100, "Pause!", e -> setRunning(!isRunning()));
+        addButton((getWidth()/2)-125,(getHeight()/3)*2-50, 250, 100, "Track Editor", e -> sceneManager.setScene("editor"));
     }
 
     private void spawnBalls() {
