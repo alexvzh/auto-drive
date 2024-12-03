@@ -44,7 +44,7 @@ public abstract class Scene extends JPanel implements Runnable {
     }
 
     public Scene(String id, int initialObjectCapacity, SceneFrequency sceneFrequency, SceneManager sceneManager) {
-        this(1128, 848, id, initialObjectCapacity, sceneFrequency, sceneManager);
+        this(1200, 850, id, initialObjectCapacity, sceneFrequency, sceneManager);
     }
 
     public abstract void update();
