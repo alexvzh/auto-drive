@@ -119,4 +119,8 @@ public class Expander extends Object implements Updatable, Drawable, Clickable, 
             this.vel = 0;
         }
     }
+
+    public void addElement(ExpanderElement element) {
+        elements.add(element);
+    }
 }
