@@ -11,17 +11,26 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+
 
 public class Sensor extends Object implements Updatable, Drawable {
 
-    public final static ArrayList<Integer> recentActivity = new ArrayList<>(Collections.nCopies(4, 0));
-    private final static ArrayList<Double> angles = new ArrayList<>(Arrays.asList(-35.0, -35.0 / 3, 0.0, 35.0 / 3, 35.0));
+    private final static List<Double> ANGLES = List.of(-35.0, -35.0 / 3, 0.0, 35.0 / 3, 35.0);
+    private final static BufferedImage BACKGROUND;
+
+    public static final List<Integer> recentActivity = Arrays.asList(0, 0, 0, 0);
     public static int currentIndex = 0;
+
+    static {
+        try {
+            BACKGROUND = ImageIO.read(Objects.requireNonNull(Sensor.class.getResourceAsStream("/map.png")));
+        } catch (IOException e) {throw new RuntimeException(e);}
+    }
 
     private final double offsetX;
     private final double offsetY;
-    private final BufferedImage backround;
     private final int id;
     private final double baseSpeed;
     private final Neville neville;
@@ -37,12 +46,6 @@ public class Sensor extends Object implements Updatable, Drawable {
         this.offsetY = calculateSensorOffsets().get(1);
         this.x = neville.getX() + offsetX;
         this.y = neville.getY() + offsetY;
-
-        try {
-            backround = ImageIO.read(getClass().getResourceAsStream("/map.png"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @Override
@@ -93,12 +96,12 @@ public class Sensor extends Object implements Updatable, Drawable {
     }
 
     public BufferedImage getBackround() {
-        return backround;
+        return BACKGROUND;
     }
 
     public boolean isOnTrack() {
 
-        int pixel = backround.getRGB((int) x, (int) y);
+        int pixel = BACKGROUND.getRGB((int) x, (int) y);
 
         //shifting bits and using bitwise AND to separate the red, green, and blue components from the integer
         int red = (pixel >> 16) & 0xff;
@@ -124,7 +127,7 @@ public class Sensor extends Object implements Updatable, Drawable {
         double y0 = 0.0;
 
         double distance = (double) neville.getSIZE() * 0.4555555555;
-        double angleRadians = Math.toRadians(angles.get(id));
+        double angleRadians = Math.toRadians(ANGLES.get(id));
 
         double xNew = x0 * Math.cos(angleRadians);
         double yNew = y0 + distance * Math.sin(angleRadians);
