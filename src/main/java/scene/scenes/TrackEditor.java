@@ -21,6 +21,16 @@ public class TrackEditor extends Scene {
 
     @Override
     public void draw(Graphics2D g2d) {
+        g2d.setColor(Color.LIGHT_GRAY);
+        g2d.setStroke(new BasicStroke(2));
+
+        for (int i = 0; i < getWidth(); i+=25) {
+            g2d.drawLine(i, 0, i, getHeight());
+        }
+        for (int i = 0; i < getHeight(); i+=25) {
+            g2d.drawLine(0, i, getWidth(), i);
+        }
+
         getObjectHandler().draw(g2d);
     }
 
