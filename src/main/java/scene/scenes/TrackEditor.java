@@ -1,6 +1,7 @@
 package scene.scenes;
 
 import object.guiobjects.Expander;
+import object.objects.StraightLine;
 import scene.Scene;
 import scene.SceneFrequency;
 import scene.SceneManager;
@@ -25,10 +26,10 @@ public class TrackEditor extends Scene {
         g2d.setColor(Color.LIGHT_GRAY);
         g2d.setStroke(new BasicStroke(2));
 
-        for (int i = 0; i < getWidth(); i+=25) {
+        for (int i = 0; i < getWidth(); i+=15) {
             g2d.drawLine(i, 0, i, getHeight());
         }
-        for (int i = 0; i < getHeight(); i+=25) {
+        for (int i = 0; i < getHeight(); i+=15) {
             g2d.drawLine(0, i, getWidth(), i);
         }
 
