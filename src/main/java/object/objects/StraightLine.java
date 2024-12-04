@@ -11,11 +11,18 @@ import java.awt.event.MouseEvent;
 
 public class StraightLine extends Object implements Updatable, Drawable, OnClickListener {
 
-    private double startX, startY, endX, endY;
-    private Scene scene;
-    private int size;
+    private static final List<Integer> angles = List.of(0, 45, 90, 135, 180, 225, 270, 315);
+    private static int angleIndex = 0;
+    public static int currentAngle = angles.get(angleIndex);
+
+    private final Scene scene;
+    private int startX, startY, endX, endY;
+    private int size = 15;
     private PlaceState placeState = PlaceState.SPAWNING;
     private boolean isHorizontal = true;
+    private int anchorX;
+    private int anchorY;
+    Shape boundingBox;
 
     enum PlaceState {
         SPAWNING,
@@ -27,7 +34,6 @@ public class StraightLine extends Object implements Updatable, Drawable, OnClick
     public StraightLine(Scene scene) {
         super(0, 0, scene);
         this.scene = scene;
-        this.size = 15;
     }
 
     @Override
@@ -41,11 +47,11 @@ public class StraightLine extends Object implements Updatable, Drawable, OnClick
 
         if (placeState == PlaceState.MOVING) {
             g2d.setColor(Color.GRAY);
-            try {g2d.fill(getUnplacedLine());} catch (Exception ignored) {}
+            try {g2d.fill(getMovingLine());} catch (Exception ignored) {}
 
         } else if (placeState == PlaceState.SELECTING) {
-            g2d.setColor(Color.DARK_GRAY);
-            g2d.fill(getBoundingBox());
+            g2d.setColor(new Color(69,69,69));
+            g2d.fill(getSelectingLine());
 
         } else if (placeState == PlaceState.PLACED) {
             g2d.setColor(Color.BLACK);
@@ -59,7 +65,8 @@ public class StraightLine extends Object implements Updatable, Drawable, OnClick
         // Mouse scroll
         if (event.getButton() == 0) {
             if (placeState != PlaceState.MOVING) return;
-            isHorizontal = !isHorizontal;
+            angleIndex = (angleIndex + 1) % angles.size();
+            currentAngle = angles.get(angleIndex);
             return;
         }
 
@@ -68,18 +75,16 @@ public class StraightLine extends Object implements Updatable, Drawable, OnClick
 
         } else if (placeState == PlaceState.MOVING) {
 
-            if (isHorizontal) {
-                startX = (int) ((scene.getMousePosition().x - 45) / size) * size;
-                startY = (int) ((scene.getMousePosition().y - 45) / size) * size + size * 3;
-            } else {
-                startX = (int)((scene.getMousePosition().x-45)/size) * size + size*3;
-                startY = (int)((scene.getMousePosition().y-45)/size) * size;
-            }
+            startX = ((scene.getMousePosition().x - size * 3) / size) * size;
+            startY = ((scene.getMousePosition().y - size * 3) / size) * size + size * 3;
 
             placeState = PlaceState.SELECTING;
 
         } else if (placeState == PlaceState.SELECTING) {
             placeState = PlaceState.PLACED;
+            boundingBox = getSelectingLine();
+            angleIndex = 0;
+            currentAngle = 0;
             new StraightLine(scene);
         }
     }
@@ -87,33 +92,45 @@ public class StraightLine extends Object implements Updatable, Drawable, OnClick
     private void updateEndCoords() {
         try {
             Point mousePosition = scene.getMousePosition();
-            if (isHorizontal) {
-                endX = (int) (mousePosition.x / size) * size + 45;
-            } else {
-                endY = (int)(mousePosition.y/size) * size + 45;
-            }
-        } catch (Exception ignored) {}
-    }
 
-    private Rectangle getBoundingBox() {
-        if (isHorizontal) {
-            if (startX < endX) {
-                return new Rectangle((int) startX, (int) startY, (int) (endX - startX) + size, size);
-            } else
-                return new Rectangle((int) endX, (int) startY, (int) (startX - endX) + size, size);
-        } else {
-            if (startY < endY) {
-                return new Rectangle((int) startX, (int) startY, size, (int) (endY - startY) + size);
-            } else
-                return new Rectangle((int) startX, (int) endY, size, (int) (startY - endY) + size);
+            endX = (mousePosition.x / size) * size + size * 3;
+            endY = (mousePosition.y / size) * size + size * 3;
+
+        } catch (Exception ignored) {
         }
     }
 
-    private Rectangle getUnplacedLine() {
-        if (isHorizontal) {
-            return new Rectangle(((scene.getMousePosition().x - 45) / size) * size, ((scene.getMousePosition().y - 45) / size) * size + size * 3, size * 7, size);
-        } else {
-            return new Rectangle(((scene.getMousePosition().x - 45) / size) * size  + size * 3, ((scene.getMousePosition().y - 45) / size) * size, size , size * 7);
-        }
+    private Shape getBoundingBox() {
+        return boundingBox;
+    }
+
+    private Shape getSelectingLine() {
+
+        Point2D startPoint= new Point2D.Double(startX, startY);
+        Point2D endPoint = new Point2D.Double(scene.getMousePosition().x, scene.getMousePosition().y);
+
+        int distance = (int) (startPoint.distance(endPoint) / size) * size;
+
+        Rectangle rect = new Rectangle(startX, startY, distance + size, size);
+
+        AffineTransform transform = new AffineTransform();
+        transform.rotate(Math.toRadians(currentAngle), anchorX, anchorY);
+
+        return transform.createTransformedShape(rect);
+    }
+
+    private Shape getMovingLine() {
+
+        Rectangle rect = new Rectangle(((scene.getMousePosition().x - size * 3) / size) * size,
+                ((scene.getMousePosition().y) / size) * size, size * 7, size);
+
+        anchorX = ((scene.getMousePosition().x - size * 3) / size) * size;
+        anchorY = angleIndex == 7 ? (scene.getMousePosition().y / size) * size + size :
+                (scene.getMousePosition().y / size) * size;
+
+        AffineTransform transform = new AffineTransform();
+        transform.rotate(Math.toRadians(currentAngle), anchorX, anchorY);
+
+        return transform.createTransformedShape(rect);
     }
 }
