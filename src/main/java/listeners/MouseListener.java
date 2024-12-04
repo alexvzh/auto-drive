@@ -5,14 +5,17 @@ import scene.Scene;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 
-public class MouseListener implements java.awt.event.MouseListener, MouseMotionListener {
+public class MouseListener implements java.awt.event.MouseListener, MouseMotionListener, MouseWheelListener {
 
     private final ObjectHandler objectHandler;
 
     public MouseListener(Scene scene) {
         scene.addMouseListener(this);
         scene.addMouseMotionListener(this);
+        scene.addMouseWheelListener(this);
         this.objectHandler = scene.getObjectHandler();
     }
 
@@ -28,7 +31,12 @@ public class MouseListener implements java.awt.event.MouseListener, MouseMotionL
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        objectHandler.clickScene(e.getPoint());
+        objectHandler.clickScene(e);
+    }
+
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e) {
+        objectHandler.clickScene(e);
     }
 
     @Override
