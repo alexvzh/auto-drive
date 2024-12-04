@@ -12,6 +12,7 @@ public class TrackEditor extends Scene {
         super(id, initialObjectCapacity, sceneFrequency, sceneManager);
         setBackroundColor(Color.WHITE);
         new Expander((double) getPreferredSize().width/2-25, getPreferredSize().height-30, this);
+        new StraightLine(this);
     }
 
     @Override

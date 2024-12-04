@@ -1,9 +1,6 @@
 package object;
 
-import object.behaviour.Clickable;
-import object.behaviour.Drawable;
-import object.behaviour.Hoverable;
-import object.behaviour.Updatable;
+import object.behaviour.*;
 import object.objects.Neville;
 
 import java.awt.*;
@@ -48,6 +45,13 @@ public class ObjectHandler {
             if (object.getBounds().contains(p)) {
                 object.onHover();
             } else object.onUnhover();
+        }
+    }
+
+    public void clickScene(Point p) {
+        for (Object object : objects) {
+            if (!(object instanceof OnClickListener)) continue;
+            ((OnClickListener)object).onClick(p);
         }
     }
 

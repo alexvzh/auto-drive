@@ -1,5 +1,7 @@
 package object.behaviour;
 
+import java.awt.*;
+
 public interface OnClickListener {
-    void onClick();
+    void onClick(Point clickLocation);
 }

@@ -2,12 +2,13 @@ package object.objects;
 
 import object.Object;
 import object.behaviour.Drawable;
+import object.behaviour.OnClickListener;
 import object.behaviour.Updatable;
 import scene.Scene;
 
 import java.awt.*;
 
-public class StraightLine extends Object implements Updatable, Drawable {
+public class StraightLine extends Object implements Updatable, Drawable, OnClickListener {
 
     private double startX, startY, endX, endY;
     private Scene scene;
@@ -33,7 +34,6 @@ public class StraightLine extends Object implements Updatable, Drawable {
     public void update() {
         if (placeState == PlaceState.PLACED) return;
         updateEndCoords();
-        doOnMouseClicked();
     }
 
     @Override
@@ -56,6 +56,22 @@ public class StraightLine extends Object implements Updatable, Drawable {
         }
     }
 
+    @Override
+    public void onClick(Point clickLocation) {
+        if (placeState == PlaceState.MOVING) {
+
+            startX = (int)((scene.getMousePosition().x-45)/size) * size;
+            endX = startX + 90;
+            startY = (int)((scene.getMousePosition().y-45)/size) * size + size*3;
+            endY = size;
+            placeState = PlaceState.SELECTING;
+
+        } else if (placeState == PlaceState.SELECTING) {
+            placeState = PlaceState.PLACED;
+            new StraightLine(scene);
+        }
+    }
+
     private void updateEndCoords() {
         try {
             Point mousePosition = scene.getMousePosition();
@@ -72,24 +88,5 @@ public class StraightLine extends Object implements Updatable, Drawable {
 
     private Rectangle getUnplacedLine() {
         return new Rectangle(((scene.getMousePosition().x-45)/size) * size, ((scene.getMousePosition().y-45)/size) * size + size*3, 90 , size);
-    }
-
-    private void doOnMouseClicked() {
-        if (scene.getMouseListener().isMouseClicked() && placeState == PlaceState.MOVING) {
-
-            startX = (int)((scene.getMousePosition().x-45)/size) * size;
-            endX = startX + 90;
-            startY = (int)((scene.getMousePosition().y-45)/size) * size + size*3;
-            endY = size;
-            placeState = PlaceState.SELECTING;
-
-            scene.getMouseListener().setMouseClicked(false);
-
-        } else if (scene.getMouseListener().isMouseClicked() && placeState == PlaceState.SELECTING) {
-            placeState = PlaceState.PLACED;
-            scene.getMouseListener().setMouseClicked(false);
-
-            new StraightLine(scene);
-        }
     }
 }
