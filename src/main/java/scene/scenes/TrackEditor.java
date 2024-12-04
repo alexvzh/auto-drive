@@ -1,7 +1,7 @@
 package scene.scenes;
 
 import object.guiobjects.Expander;
-import object.objects.HorizontalLine;
+import object.objects.StraightLine;
 import scene.Scene;
 import scene.SceneFrequency;
 import scene.SceneManager;
@@ -13,7 +13,7 @@ public class TrackEditor extends Scene {
         super(id, initialObjectCapacity, sceneFrequency, sceneManager);
         setBackroundColor(Color.WHITE);
         new Expander((double) getPreferredSize().width/2-25, getPreferredSize().height-30, this);
-        new HorizontalLine(this);
+        new StraightLine(this);
     }
 
     @Override
