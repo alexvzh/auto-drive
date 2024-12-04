@@ -8,6 +8,9 @@ import scene.Scene;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
+import java.util.List;
 
 public class StraightLine extends Object implements Updatable, Drawable, OnClickListener {
 
@@ -16,13 +19,11 @@ public class StraightLine extends Object implements Updatable, Drawable, OnClick
     public static int currentAngle = angles.get(angleIndex);
 
     private final Scene scene;
-    private int startX, startY, endX, endY;
     private int size = 15;
     private PlaceState placeState = PlaceState.SPAWNING;
-    private boolean isHorizontal = true;
     private int anchorX;
     private int anchorY;
-    Shape boundingBox;
+    private Shape boundingBox;
 
     enum PlaceState {
         SPAWNING,
@@ -37,10 +38,7 @@ public class StraightLine extends Object implements Updatable, Drawable, OnClick
     }
 
     @Override
-    public void update() {
-        if (placeState == PlaceState.PLACED) return;
-        updateEndCoords();
-    }
+    public void update() {}
 
     @Override
     public void draw(Graphics2D g2d) {
@@ -75,8 +73,8 @@ public class StraightLine extends Object implements Updatable, Drawable, OnClick
 
         } else if (placeState == PlaceState.MOVING) {
 
-            startX = ((scene.getMousePosition().x - size * 3) / size) * size;
-            startY = ((scene.getMousePosition().y - size * 3) / size) * size + size * 3;
+            x = (int)((scene.getMousePosition().x - size * 3) / size) * size;
+            y = (int)((scene.getMousePosition().y - size * 3) / size) * size + size * 3;
 
             placeState = PlaceState.SELECTING;
 
@@ -89,29 +87,18 @@ public class StraightLine extends Object implements Updatable, Drawable, OnClick
         }
     }
 
-    private void updateEndCoords() {
-        try {
-            Point mousePosition = scene.getMousePosition();
-
-            endX = (mousePosition.x / size) * size + size * 3;
-            endY = (mousePosition.y / size) * size + size * 3;
-
-        } catch (Exception ignored) {
-        }
-    }
-
     private Shape getBoundingBox() {
         return boundingBox;
     }
 
     private Shape getSelectingLine() {
 
-        Point2D startPoint= new Point2D.Double(startX, startY);
+        Point2D startPoint= new Point2D.Double(x, y);
         Point2D endPoint = new Point2D.Double(scene.getMousePosition().x, scene.getMousePosition().y);
 
         int distance = (int) (startPoint.distance(endPoint) / size) * size;
 
-        Rectangle rect = new Rectangle(startX, startY, distance + size, size);
+        Rectangle rect = new Rectangle((int)x, (int)y, distance + size, size);
 
         AffineTransform transform = new AffineTransform();
         transform.rotate(Math.toRadians(currentAngle), anchorX, anchorY);
