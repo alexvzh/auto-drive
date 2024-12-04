@@ -9,7 +9,7 @@ import scene.Scene;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-public class HorizontalLine extends Object implements Updatable, Drawable, OnClickListener {
+public class StraightLine extends Object implements Updatable, Drawable, OnClickListener {
 
     private double startX, startY, endX, endY;
     private Scene scene;
@@ -24,7 +24,7 @@ public class HorizontalLine extends Object implements Updatable, Drawable, OnCli
         PLACED
     }
 
-    public HorizontalLine(Scene scene) {
+    public StraightLine(Scene scene) {
         super(0, 0, scene);
         this.scene = scene;
         this.size = 15;
@@ -80,7 +80,7 @@ public class HorizontalLine extends Object implements Updatable, Drawable, OnCli
 
         } else if (placeState == PlaceState.SELECTING) {
             placeState = PlaceState.PLACED;
-            new HorizontalLine(scene);
+            new StraightLine(scene);
         }
     }
 
