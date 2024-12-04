@@ -7,15 +7,18 @@ import object.behaviour.Updatable;
 import scene.Scene;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 
 public class HorizontalLine extends Object implements Updatable, Drawable, OnClickListener {
 
     private double startX, startY, endX, endY;
     private Scene scene;
     private int size;
-    private PlaceState placeState = PlaceState.MOVING;
+    private PlaceState placeState = PlaceState.SPAWNING;
+    private boolean isHorizontal = true;
 
     enum PlaceState {
+        SPAWNING,
         MOVING,
         SELECTING,
         PLACED
@@ -23,9 +26,6 @@ public class HorizontalLine extends Object implements Updatable, Drawable, OnCli
 
     public HorizontalLine(Scene scene) {
         super(0, 0, scene);
-        this.startX = x + 1;
-        this.startY = y + 1;
-        this.endY = startY;
         this.scene = scene;
         this.size = 15;
     }
@@ -38,8 +38,6 @@ public class HorizontalLine extends Object implements Updatable, Drawable, OnCli
 
     @Override
     public void draw(Graphics2D g2d) {
-        g2d.setColor(Color.BLACK);
-        g2d.setStroke(new BasicStroke(1));
 
         if (placeState == PlaceState.MOVING) {
             g2d.setColor(Color.GRAY);
@@ -57,13 +55,27 @@ public class HorizontalLine extends Object implements Updatable, Drawable, OnCli
     }
 
     @Override
-    public void onClick(Point clickLocation) {
-        if (placeState == PlaceState.MOVING) {
+    public void onClick(MouseEvent event) {
+        // Mouse scroll
+        if (event.getButton() == 0) {
+            if (placeState != PlaceState.MOVING) return;
+            isHorizontal = !isHorizontal;
+            return;
+        }
 
-            startX = (int)((scene.getMousePosition().x-45)/size) * size;
-            endX = startX + 90;
-            startY = (int)((scene.getMousePosition().y-45)/size) * size + size*3;
-            endY = size;
+        if (placeState == PlaceState.SPAWNING) {
+            placeState = PlaceState.MOVING;
+
+        } else if (placeState == PlaceState.MOVING) {
+
+            if (isHorizontal) {
+                startX = (int) ((scene.getMousePosition().x - 45) / size) * size;
+                startY = (int) ((scene.getMousePosition().y - 45) / size) * size + size * 3;
+            } else {
+                startX = (int)((scene.getMousePosition().x-45)/size) * size + size*3;
+                startY = (int)((scene.getMousePosition().y-45)/size) * size;
+            }
+
             placeState = PlaceState.SELECTING;
 
         } else if (placeState == PlaceState.SELECTING) {
@@ -75,18 +87,33 @@ public class HorizontalLine extends Object implements Updatable, Drawable, OnCli
     private void updateEndCoords() {
         try {
             Point mousePosition = scene.getMousePosition();
-            endX = (int)(mousePosition.x/size) * size + 30;
+            if (isHorizontal) {
+                endX = (int) (mousePosition.x / size) * size + 45;
+            } else {
+                endY = (int)(mousePosition.y/size) * size + 45;
+            }
         } catch (Exception ignored) {}
     }
 
     private Rectangle getBoundingBox() {
-        if (startX < endX) {
-            return new Rectangle((int) startX, (int) startY, (int) (endX - startX) + size, size);
-        } else
-            return new Rectangle((int) endX, (int) startY, (int) (startX - endX) + size, size);
+        if (isHorizontal) {
+            if (startX < endX) {
+                return new Rectangle((int) startX, (int) startY, (int) (endX - startX) + size, size);
+            } else
+                return new Rectangle((int) endX, (int) startY, (int) (startX - endX) + size, size);
+        } else {
+            if (startY < endY) {
+                return new Rectangle((int) startX, (int) startY, size, (int) (endY - startY) + size);
+            } else
+                return new Rectangle((int) startX, (int) endY, size, (int) (startY - endY) + size);
+        }
     }
 
     private Rectangle getUnplacedLine() {
-        return new Rectangle(((scene.getMousePosition().x-45)/size) * size, ((scene.getMousePosition().y-45)/size) * size + size*3, 90 , size);
+        if (isHorizontal) {
+            return new Rectangle(((scene.getMousePosition().x - 45) / size) * size, ((scene.getMousePosition().y - 45) / size) * size + size * 3, size * 7, size);
+        } else {
+            return new Rectangle(((scene.getMousePosition().x - 45) / size) * size  + size * 3, ((scene.getMousePosition().y - 45) / size) * size, size , size * 7);
+        }
     }
 }
