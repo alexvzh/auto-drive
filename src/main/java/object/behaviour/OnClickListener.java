@@ -1,7 +1,7 @@
 package object.behaviour;
 
-import java.awt.*;
+import java.awt.event.MouseEvent;
 
 public interface OnClickListener {
-    void onClick(Point clickLocation);
+    void onClick(MouseEvent event);
 }
