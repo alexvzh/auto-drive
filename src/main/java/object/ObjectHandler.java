@@ -4,6 +4,7 @@ import object.behaviour.*;
 import object.objects.Neville;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class ObjectHandler {
@@ -48,10 +49,11 @@ public class ObjectHandler {
         }
     }
 
-    public void clickScene(Point p) {
-        for (Object object : objects) {
-            if (!(object instanceof OnClickListener)) continue;
-            ((OnClickListener)object).onClick(p);
+    public void clickScene(MouseEvent event) {
+        for (int i = 0; i < objects.size(); i++) {
+            if (!(objects.get(i) instanceof OnClickListener)) continue;
+            OnClickListener object = (OnClickListener)objects.get(i);
+            object.onClick(event);
         }
     }
 
