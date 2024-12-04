@@ -8,7 +8,7 @@ import scene.Scene;
 
 import java.awt.*;
 
-public class StraightLine extends Object implements Updatable, Drawable, OnClickListener {
+public class HorizontalLine extends Object implements Updatable, Drawable, OnClickListener {
 
     private double startX, startY, endX, endY;
     private Scene scene;
@@ -21,7 +21,7 @@ public class StraightLine extends Object implements Updatable, Drawable, OnClick
         PLACED
     }
 
-    public StraightLine(Scene scene) {
+    public HorizontalLine(Scene scene) {
         super(0, 0, scene);
         this.startX = x + 1;
         this.startY = y + 1;
@@ -68,7 +68,7 @@ public class StraightLine extends Object implements Updatable, Drawable, OnClick
 
         } else if (placeState == PlaceState.SELECTING) {
             placeState = PlaceState.PLACED;
-            new StraightLine(scene);
+            new HorizontalLine(scene);
         }
     }
 
