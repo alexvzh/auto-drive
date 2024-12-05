@@ -8,22 +8,30 @@ import scene.Scene;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 import java.util.List;
 
 public class StraightLine extends Object implements Updatable, Drawable, OnClickListener {
 
-    private static final List<Integer> angles = List.of(0, 45, 90, 135, 180, 225, 270, 315);
-    private static int angleIndex = 0;
-    public static int currentAngle = angles.get(angleIndex);
+    private final List<Integer> angles = createAngleList(15);
+    private int angleIndex = 0;
+    private int angle = angles.get(angleIndex);
+
+    private static final ArrayList<StraightLine> lines = new ArrayList<>();
 
     private final Scene scene;
-    private int size = 15;
     private PlaceState placeState = PlaceState.SPAWNING;
-    private int anchorX;
-    private int anchorY;
+    private int size = 15;
+    private int endX, endY;
+
+    private boolean snapToGrid = false;
+
+    private int anchorX, anchorY;
     private Shape boundingBox;
+    private StraightLine snappedLine;
 
     enum PlaceState {
         SPAWNING,
@@ -35,6 +43,7 @@ public class StraightLine extends Object implements Updatable, Drawable, OnClick
     public StraightLine(Scene scene) {
         super(0, 0, scene);
         this.scene = scene;
+        lines.add(this);
     }
 
     @Override
@@ -62,9 +71,12 @@ public class StraightLine extends Object implements Updatable, Drawable, OnClick
     public void onClick(MouseEvent event) {
         // Mouse scroll
         if (event.getButton() == 0) {
+
             if (placeState != PlaceState.MOVING) return;
-            angleIndex = (angleIndex + 1) % angles.size();
-            currentAngle = angles.get(angleIndex);
+            if (((MouseWheelEvent) event).getWheelRotation() > 0) angleIndex = (angleIndex + 1) % angles.size();
+            else angleIndex = (angleIndex - 1 + angles.size()) % angles.size();
+
+            angle = angles.get(angleIndex);
             return;
         }
 
@@ -72,17 +84,11 @@ public class StraightLine extends Object implements Updatable, Drawable, OnClick
             placeState = PlaceState.MOVING;
 
         } else if (placeState == PlaceState.MOVING) {
-
-            x = (int)((scene.getMousePosition().x - size * 3) / size) * size;
-            y = (int)((scene.getMousePosition().y - size * 3) / size) * size + size * 3;
-
             placeState = PlaceState.SELECTING;
 
         } else if (placeState == PlaceState.SELECTING) {
             placeState = PlaceState.PLACED;
             boundingBox = getSelectingLine();
-            angleIndex = 0;
-            currentAngle = 0;
             new StraightLine(scene);
         }
     }
@@ -96,28 +102,81 @@ public class StraightLine extends Object implements Updatable, Drawable, OnClick
         Point2D startPoint= new Point2D.Double(x, y);
         Point2D endPoint = new Point2D.Double(scene.getMousePosition().x, scene.getMousePosition().y);
 
-        int distance = (int) (startPoint.distance(endPoint) / size) * size;
+        int distance = snapToGrid((int) startPoint.distance(endPoint));
 
-        Rectangle rect = new Rectangle((int)x, (int)y, distance + size, size);
+        Rectangle rect = new Rectangle((int)x, (int)y, distance, size);
+
+        double angleInRadians = Math.toRadians(angle);
+        endX = (int) (x + distance * Math.cos(angleInRadians));
+        endY = (int) (y + distance * Math.sin(angleInRadians));
 
         AffineTransform transform = new AffineTransform();
-        transform.rotate(Math.toRadians(currentAngle), anchorX, anchorY);
+        transform.rotate(Math.toRadians(angle), anchorX, anchorY);
 
         return transform.createTransformedShape(rect);
     }
 
     private Shape getMovingLine() {
 
-        Rectangle rect = new Rectangle(((scene.getMousePosition().x - size * 3) / size) * size,
-                ((scene.getMousePosition().y) / size) * size, size * 7, size);
+        x = snapToGrid(scene.getMousePosition().x);
+        y = snapToGrid(scene.getMousePosition().y);
 
-        anchorX = ((scene.getMousePosition().x - size * 3) / size) * size;
-        anchorY = angleIndex == 7 ? (scene.getMousePosition().y / size) * size + size :
-                (scene.getMousePosition().y / size) * size;
+        snapToLine();
 
+        anchorX = (int) x;
+        anchorY = (int) (angleIndex > angles.size()/4*3 ? y + size : y);
+
+        updateAnchors();
+
+        Rectangle rect = new Rectangle((int) x, (int) y, size * 7, size);
         AffineTransform transform = new AffineTransform();
-        transform.rotate(Math.toRadians(currentAngle), anchorX, anchorY);
+        transform.rotate(Math.toRadians(angle), anchorX, anchorY);
+
 
         return transform.createTransformedShape(rect);
     }
+
+    private int snapToGrid(int coordinate) {
+        if (this.snapToGrid) return (coordinate / size) * size;
+        return coordinate;
+    }
+
+    private void snapToLine() {
+        for (StraightLine line : lines) {
+            if (Math.abs(line.getEndX() - x) < 25 && Math.abs(line.getEndY() - y) < 25) {
+                x = line.getEndX();
+                y = line.getEndY();
+                snappedLine = line;
+                return;
+            }
+        }
+        snappedLine = null;
+    }
+
+    private void updateAnchors() {
+        if (snappedLine == null) return;
+        anchorX = snappedLine.getEndX();
+        anchorY = (angleIndex > angles.size()/2 ? snappedLine.getEndY() + size : snappedLine.getEndY());
+    }
+
+    private static List<Integer> createAngleList(int angleIncrement) {
+        List<Integer> angles = new ArrayList<>();
+        for (int i = 0; i < 360; i += angleIncrement) {
+            angles.add(i);
+        }
+        return angles;
+    }
+
+    public int getEndX() {
+        return endX;
+    }
+
+    public int getEndY() {
+        return endY;
+    }
+
+    public int getAngle() {
+        return angle;
+    }
+
 }
