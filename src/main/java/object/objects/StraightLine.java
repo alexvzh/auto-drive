@@ -16,18 +16,19 @@ import java.util.List;
 
 public class StraightLine extends Object implements Updatable, Drawable, OnClickListener {
 
+    private static final ArrayList<StraightLine> lines = new ArrayList<>();
+
     private final List<Integer> angles = createAngleList(15);
     private int angleIndex = 0;
     private int angle = angles.get(angleIndex);
-
-    private static final ArrayList<StraightLine> lines = new ArrayList<>();
 
     private final Scene scene;
     private PlaceState placeState = PlaceState.SPAWNING;
     private int size = 15;
     private int endX, endY;
+    private Point2D.Double[] corners;
 
-    private boolean snapToGrid = false;
+    private boolean snapToGrid = true;
 
     private int anchorX, anchorY;
     private Shape boundingBox;
@@ -63,7 +64,7 @@ public class StraightLine extends Object implements Updatable, Drawable, OnClick
         } else if (placeState == PlaceState.PLACED) {
             g2d.setColor(Color.BLACK);
             g2d.fill(getBoundingBox());
-
+            g2d.setColor(Color.BLUE);
         }
     }
 
@@ -113,6 +114,8 @@ public class StraightLine extends Object implements Updatable, Drawable, OnClick
         AffineTransform transform = new AffineTransform();
         transform.rotate(Math.toRadians(angle), anchorX, anchorY);
 
+        calculateRotatedCorners(rect, transform);
+
         return transform.createTransformedShape(rect);
     }
 
@@ -124,14 +127,14 @@ public class StraightLine extends Object implements Updatable, Drawable, OnClick
         snapToLine();
 
         anchorX = (int) x;
-        anchorY = (int) (angleIndex > angles.size()/4*3 ? y + size : y);
+        anchorY = (int) y;
 
         updateAnchors();
 
         Rectangle rect = new Rectangle((int) x, (int) y, size * 7, size);
+
         AffineTransform transform = new AffineTransform();
         transform.rotate(Math.toRadians(angle), anchorX, anchorY);
-
 
         return transform.createTransformedShape(rect);
     }
@@ -143,10 +146,16 @@ public class StraightLine extends Object implements Updatable, Drawable, OnClick
 
     private void snapToLine() {
         for (StraightLine line : lines) {
+            if (line == this) continue;
             if (Math.abs(line.getEndX() - x) < 25 && Math.abs(line.getEndY() - y) < 25) {
-                x = line.getEndX();
-                y = line.getEndY();
                 snappedLine = line;
+                if (isInLeftRange(snappedLine.getAngle(), angle)) {
+                    x = (int) snappedLine.getCorners()[3].x;
+                    y = (int) snappedLine.getCorners()[3].y - size;
+                } else {
+                    x = (int) snappedLine.getCorners()[2].x;
+                    y = (int) snappedLine.getCorners()[2].y;
+                }
                 return;
             }
         }
@@ -155,16 +164,13 @@ public class StraightLine extends Object implements Updatable, Drawable, OnClick
 
     private void updateAnchors() {
         if (snappedLine == null) return;
-        anchorX = snappedLine.getEndX();
-        anchorY = (angleIndex > angles.size()/2 ? snappedLine.getEndY() + size : snappedLine.getEndY());
-    }
-
-    private static List<Integer> createAngleList(int angleIncrement) {
-        List<Integer> angles = new ArrayList<>();
-        for (int i = 0; i < 360; i += angleIncrement) {
-            angles.add(i);
+        if (isInLeftRange(snappedLine.getAngle(), angle)) {
+            anchorX = (int) snappedLine.getCorners()[3].x;
+            anchorY = (int) snappedLine.getCorners()[3].y;
+        } else {
+            anchorX = (int) snappedLine.getCorners()[2].x;
+            anchorY = (int) snappedLine.getCorners()[2].y;
         }
-        return angles;
     }
 
     public int getEndX() {
@@ -177,6 +183,47 @@ public class StraightLine extends Object implements Updatable, Drawable, OnClick
 
     public int getAngle() {
         return angle;
+    }
+
+    public Point2D.Double[] getCorners() {
+        return corners;
+    }
+
+    public void calculateRotatedCorners(Rectangle rect, AffineTransform transform) {
+        corners = new Point2D.Double[] {
+                new Point2D.Double(rect.getX(), rect.getY()),
+                new Point2D.Double(rect.getX(), rect.getY() + rect.getHeight()),
+                new Point2D.Double(rect.getX() + rect.getWidth(), rect.getY()),
+                new Point2D.Double(rect.getX() + rect.getWidth(), rect.getY() + rect.getHeight())
+        };
+
+        for (int i = 0; i < corners.length; i++) {
+            Point2D.Double transformedCorner = new Point2D.Double();
+            transform.transform(corners[i], transformedCorner);
+            corners[i] = transformedCorner;
+        }
+    }
+
+    public static boolean isInLeftRange(int currentAngle, int testAngle) {
+        currentAngle = (currentAngle % 360 + 360) % 360;
+        testAngle = (testAngle % 360 + 360) % 360;
+
+        int leftStart = (currentAngle - 90 + 360) % 360;
+        int leftEnd = currentAngle;
+
+        if (leftStart > leftEnd) {
+            return testAngle >= leftStart || testAngle <= leftEnd;
+        } else {
+            return testAngle >= leftStart && testAngle <= leftEnd;
+        }
+    }
+
+    private static List<Integer> createAngleList(int angleIncrement) {
+        List<Integer> angles = new ArrayList<>();
+        for (int i = 0; i < 360; i += angleIncrement) {
+            angles.add(i);
+        }
+        return angles;
     }
 
 }
